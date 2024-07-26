@@ -1,36 +1,45 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# GameStore
 
-## Getting Started
+---
 
-First, run the development server:
+This project is a e-commerce project.
+It uses Next.js, alongside with ShadcnUI components, Auth.js and Prisma.
+The main goal of the project is to create a good looking UI, while developing a working product.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+---
+## Functionalities
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The expected functionalities are as follow:
+- Admin dashboard with the CRUD for games, categories, developers, etc.
+- Mocking sales system, with shopping cart, sales history, etc.
+- Authentication for each user.
+- Review system.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Technologies
 
-## Learn More
+The currently employed technologies are as follow:
+-Next.js
+-React.js
+-TailwindCss
+-ShadcnUI
+-Auth.js
 
-To learn more about Next.js, take a look at the following resources:
+---
+## TODO
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- [X] Initiate the project.
+- [X] Implement Auth.js.
+- [X] Create initial database setup.
+- [X] Create basic UI starting point.
+- [ ] Implement fully functional TopBar with SideBar menu.
+- [ ] Create starting page.
+- [ ] Create functional Games page.
+- [ ] Add functional Shopping Cart.
+- [ ] Create management Dashboards.
+- [ ] Seeding for the database.
+- [ ] Create sales process.
+- [ ] Improve database structure.
+- [ ] Add responsivity.
+- [ ] Add Theme changer and improve the themes visual.
