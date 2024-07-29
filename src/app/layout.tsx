@@ -4,6 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import TopBar from "@/components/TopBar/TopBar";
 import { cn } from "@/lib/utils";
+import { GlobalStateProvider } from "@/context/ContextProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,15 +21,17 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={cn("flex flex-col min-h-screen", inter.className)}>
-        <ThemeProvider
-          defaultTheme="dark"
-          attribute="class"
-          enableSystem
-          disableTransitionOnChange
-        >
-          <TopBar />
-          {children}
-        </ThemeProvider>
+        <GlobalStateProvider>
+          <ThemeProvider
+            defaultTheme="dark"
+            attribute="class"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <TopBar />
+            {children}
+          </ThemeProvider>
+        </GlobalStateProvider>
       </body>
     </html>
   );

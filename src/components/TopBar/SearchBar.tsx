@@ -2,6 +2,7 @@ import { FaSearch } from "react-icons/fa";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
+// SearchBar, yet to implement functionalities.
 function SearchBar() {
   return (
     <search className="flex-1 flex items-center justify-center min-w-full relative">

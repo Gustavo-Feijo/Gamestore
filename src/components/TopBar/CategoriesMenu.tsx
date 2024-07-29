@@ -7,6 +7,8 @@ import {
   MenubarTrigger,
 } from "@/components/ui/menubar";
 import { FaBars } from "react-icons/fa";
+
+// Menu of categories, yet to do.
 function CategoriesMenu() {
   return (
     <Menubar>
