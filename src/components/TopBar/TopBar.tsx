@@ -5,7 +5,7 @@ import { FaHome } from "react-icons/fa";
 import SideBar from "./SideBar";
 import CategoriesMenu from "./CategoriesMenu";
 import { auth } from "@/auth";
-import ShoppingCartWrapper from "./ShoppingCartWrapper";
+import ShoppingCart from "./ShoppingCart";
 
 // TopBar for navigation through the app.
 async function TopBar() {
@@ -18,7 +18,7 @@ async function TopBar() {
       </div>
       {session && (
         <div className="absolute right-4">
-          <ShoppingCartWrapper />
+          <ShoppingCart />
         </div>
       )}
       <div className="flex-1 items-center justify-end gap-4 hidden lg:flex">

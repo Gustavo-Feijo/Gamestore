@@ -121,12 +121,11 @@ model SaleProduct {
 }
 
 model ShoppingItems {
-  game     Game   @relation(fields: [gameId], references: [id])
-  User     User   @relation(fields: [userId], references: [id])
-  userId   String
-  gameId   String
-  amount   Int
-  discount Float
+  game   Game   @relation(fields: [gameId], references: [id])
+  User   User   @relation(fields: [userId], references: [id])
+  userId String
+  gameId String
+  amount Int
 
   @@id([userId, gameId])
 }

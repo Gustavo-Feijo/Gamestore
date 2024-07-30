@@ -12,10 +12,12 @@ import { Button } from "@/components/ui/button";
 import { useGlobalState } from "@/context/ContextProvider";
 import Image from "next/image";
 import { Input } from "../ui/input";
+import { toast } from "sonner";
 
 // ShoppingCart (TODO)
 function ShoppingCart() {
-  const { state, removeItem, updateAmount } = useGlobalState();
+  const { state, removeItem, updateAmount, confirmAmountUpdate } =
+    useGlobalState();
   return (
     <Sheet>
       <SheetTrigger asChild>
@@ -26,6 +28,9 @@ function ShoppingCart() {
       <SheetContent className="w-[400px] sm:w-[540px] flex flex-col items-center">
         <SheetHeader>
           <SheetTitle className="text-4xl">Shopping Cart</SheetTitle>
+          <SheetDescription className="text-center">
+            Your current selected items...
+          </SheetDescription>
         </SheetHeader>
         <div className="flex flex-col gap-4">
           {state.shoppingCart.length == 0 && (
@@ -57,13 +62,11 @@ function ShoppingCart() {
                     </span>
                     <Input
                       type="number"
-                      value={item.amount}
+                      defaultValue={item.amount}
                       onChange={(e) => {
                         if (e.target.value != "") {
                           const val = parseInt(e.target.value);
-                          val <= 0
-                            ? removeItem(item.id)
-                            : updateAmount(item.id, val);
+                          updateAmount(item.gameId, val);
                         }
                       }}
                       className="w-20"
@@ -73,11 +76,66 @@ function ShoppingCart() {
                     <Button
                       variant="outline"
                       className="h-fit px-3"
-                      onClick={() => removeItem(item.id)}
+                      onClick={async () =>
+                        removeItem(item.gameId)
+                          .then(() => {
+                            toast("The game was removed from your cart.", {
+                              action: { label: "Okay", onClick: () => {} },
+                            });
+                          })
+                          .catch((err: Error) => {
+                            toast(
+                              "It wasn't possible to remove the game from your cart",
+                              {
+                                description:
+                                  (err.cause as string) || "No cause specified",
+                              }
+                            );
+                          })
+                      }
                     >
                       <FaTrash />
                     </Button>
-                    <Button variant="outline" className="h-fit px-3">
+                    <Button
+                      variant="outline"
+                      className="h-fit px-3"
+                      onClick={async () => {
+                        console.log(item);
+                        item.amount > 0
+                          ? confirmAmountUpdate(item.gameId)
+                              .then(() => {
+                                toast("The game was updated on your cart.", {
+                                  action: { label: "Okay", onClick: () => {} },
+                                });
+                              })
+                              .catch((err: Error) => {
+                                toast(
+                                  "It wasn't possible to update the game amount on your cart",
+                                  {
+                                    description:
+                                      (err.cause as string) ||
+                                      "No cause specified",
+                                  }
+                                );
+                              })
+                          : removeItem(item.gameId)
+                              .then(() => {
+                                toast("The game was removed from your cart.", {
+                                  action: { label: "Okay", onClick: () => {} },
+                                });
+                              })
+                              .catch((err: Error) => {
+                                toast(
+                                  "It wasn't possible to remove the game from your cart",
+                                  {
+                                    description:
+                                      (err.cause as string) ||
+                                      "No cause specified",
+                                  }
+                                );
+                              });
+                      }}
+                    >
                       <FaCheck />
                     </Button>
                   </div>

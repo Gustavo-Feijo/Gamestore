@@ -5,6 +5,7 @@ import { ThemeProvider } from "@/components/ThemeProvider";
 import TopBar from "@/components/TopBar/TopBar";
 import { cn } from "@/lib/utils";
 import { GlobalStateProvider } from "@/context/ContextProvider";
+import { Toaster } from "sonner";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -30,6 +31,7 @@ export default function RootLayout({
           >
             <TopBar />
             {children}
+            <Toaster className="pointer-events-auto" />
           </ThemeProvider>
         </GlobalStateProvider>
       </body>
