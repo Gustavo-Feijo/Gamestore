@@ -21,6 +21,7 @@ const GlobalState = createContext<GlobalContextType>({
   addItem: async () => {},
   removeItem: async () => {},
   updateAmount: async () => {},
+  confirmAmountUpdate: async () => {},
 });
 
 // State provider.
@@ -73,7 +74,16 @@ export function GlobalStateProvider({ children }: { children: ReactNode }) {
         cur.gameId === gameId ? { ...cur, amount: amount } : cur
       ),
     }));
-    await updateOnCart(gameId, amount);
+  }
+
+  // Function to confirm the update of the amount and trigger the database.
+  // Used for saving up databases calls, only being triggered when the use manually saves.
+  async function confirmAmountUpdate(gameId: string) {
+    // Get the amount from the state.
+    const amount = state.shoppingCart.find((cur) => cur.gameId == gameId);
+    if (amount) {
+      await updateOnCart(gameId, amount.amount);
+    }
   }
 
   // Async function to sync the cart with the database.
@@ -141,7 +151,7 @@ export function GlobalStateProvider({ children }: { children: ReactNode }) {
   async function updateOnCart(gameId: string, amount: number) {
     // Delete request for the url with the gameId.
     const response = await fetch(`/api/cart/${encodeURIComponent(gameId)}`, {
-      method: "PUT",
+      method: "PATCH",
       body: JSON.stringify({ amount }),
       headers: {
         "Content-Type": "application/json",
@@ -167,7 +177,9 @@ export function GlobalStateProvider({ children }: { children: ReactNode }) {
   }, []);
 
   return (
-    <GlobalState.Provider value={{ state, addItem, removeItem, updateAmount }}>
+    <GlobalState.Provider
+      value={{ state, addItem, removeItem, updateAmount, confirmAmountUpdate }}
+    >
       {children}
     </GlobalState.Provider>
   );

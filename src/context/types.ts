@@ -16,4 +16,5 @@ export type GlobalContextType = {
   addItem: (item: ShoppingItem) => Promise<void>;
   removeItem: (gameId: string) => Promise<void>;
   updateAmount: (gameId: string, amount: number) => Promise<void>;
+  confirmAmountUpdate: (gameId: string) => Promise<void>;
 };
