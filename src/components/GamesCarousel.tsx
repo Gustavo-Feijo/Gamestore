@@ -15,11 +15,10 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import Image from "next/image";
-import { Button } from "./ui/button";
+import { Button } from "@/components/ui/button";
 import { FaShoppingCart } from "react-icons/fa";
 import { Prisma } from "@prisma/client";
 import { useGlobalState } from "@/context/ContextProvider";
-import { toast } from "sonner";
 
 // Type of the gamelist to be passed down.
 type GameList = Prisma.GameGetPayload<{ include: { Categories: true } }>[];
@@ -72,27 +71,13 @@ function GamesCarousel({ gameList }: { gameList: GameList }) {
                   <Button
                     className="bg-green-300 rounded h-fit p-0"
                     onClick={async () => {
-                      addItem({
+                      await addItem({
                         gameId: game.id,
                         amount: 1,
                         image: game.image,
                         name: game.name,
                         price: game.price,
-                      })
-                        .then(() => {
-                          toast("The game was added to your cart.", {
-                            action: { label: "Okay", onClick: () => {} },
-                          });
-                        })
-                        .catch((err: Error) => {
-                          toast(
-                            "It wasn't possible to add the game to your cart",
-                            {
-                              description:
-                                (err.cause as string) || "No cause specified",
-                            }
-                          );
-                        });
+                      });
                     }}
                   >
                     <span className="text-black font-extrabold flex items-center p-3 gap-2">
