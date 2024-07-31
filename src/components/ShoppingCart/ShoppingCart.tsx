@@ -11,10 +11,8 @@ import { FaCheck, FaMoneyBill, FaShoppingCart, FaTrash } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
 import { useGlobalState } from "@/context/ContextProvider";
 import Image from "next/image";
-import { Input } from "../ui/input";
-import { toast } from "sonner";
+import { Input } from "@/components/ui/input";
 import { GlobalContextType, ShoppingItem } from "@/types";
-import { useRouter } from "next/navigation";
 
 // Single item of the shopping cart.
 const ShoppingCartItem = ({
@@ -31,46 +29,6 @@ const ShoppingCartItem = ({
     "confirmAmountUpdate"
   >["confirmAmountUpdate"];
 }) => {
-  // Instanciate the router for refreshing the page.
-  const router = useRouter();
-
-  // Function to handle the remove of a item from the cart.
-  const handleRemove = async () => {
-    try {
-      await removeItem(item.gameId);
-      toast.success("The game was removed from your cart.", {
-        action: { label: "Okay", onClick: () => {} },
-      });
-    } catch (error: any) {
-      toast.error("It wasn't possible to remove the game from your cart", {
-        description: error.cause || "No cause specified",
-        action: { label: "Refresh", onClick: () => router.refresh() },
-      });
-    }
-  };
-
-  // Function to handle a item update on the cart.
-  const handleUpdate = async () => {
-    if (item.amount > 0) {
-      try {
-        await confirmAmountUpdate(item.gameId);
-        toast.success("The game was updated on your cart.", {
-          action: { label: "Okay", onClick: () => {} },
-        });
-      } catch (err: any) {
-        toast.error(
-          "It wasn't possible to update the game amount on your cart",
-          {
-            description: err.cause || "No cause specified",
-            action: { label: "Refresh", onClick: () => router.refresh() },
-          }
-        );
-      }
-    } else {
-      handleRemove();
-    }
-  };
-
   return (
     <div className="flex p-2 border border-border rounded shadow shadow-secondary">
       <div className="aspect-[3/4] h-full relative">
@@ -105,14 +63,20 @@ const ShoppingCartItem = ({
             <Button
               variant="outline"
               className="h-fit px-3"
-              onClick={handleRemove}
+              onClick={() => {
+                removeItem(item.gameId);
+              }}
             >
               <FaTrash />
             </Button>
             <Button
               variant="outline"
               className="h-fit px-3"
-              onClick={handleUpdate}
+              onClick={() => {
+                item.amount > 0
+                  ? confirmAmountUpdate(item.gameId)
+                  : removeItem(item.gameId);
+              }}
             >
               <FaCheck />
             </Button>
