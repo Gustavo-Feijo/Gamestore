@@ -6,9 +6,9 @@ import {
   useEffect,
   useState,
 } from "react";
-import { GlobalContextType, InitialState, ShoppingItem } from "./types";
 import { Prisma } from "@prisma/client";
 import { toast } from "sonner";
+import { GlobalContextType, InitialState, ShoppingItem } from "@/types";
 
 // Type for the CardSync.
 type CardSync = Prisma.ShoppingItemsGetPayload<{
