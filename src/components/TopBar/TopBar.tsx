@@ -5,7 +5,7 @@ import { FaHome } from "react-icons/fa";
 import SideBar from "./SideBar";
 import CategoriesMenu from "./CategoriesMenu";
 import { auth } from "@/auth";
-import ShoppingCart from "./ShoppingCart";
+import ShoppingCart from "@/components/ShoppingCart/ShoppingCart";
 
 // TopBar for navigation through the app.
 async function TopBar() {
