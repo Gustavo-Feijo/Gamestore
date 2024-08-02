@@ -162,7 +162,7 @@ export function GlobalStateProvider({ children }: { children: ReactNode }) {
       // Toast to show that a error happened.
       if (error instanceof Error) {
         toast.error("Couldn't sync the cart with the database.", {
-          description: "Try refreshing the page.",
+          description: (error.cause as string) || "No cause specified",
         });
       }
     }
