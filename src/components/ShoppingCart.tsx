@@ -1,4 +1,7 @@
 "use client";
+import { Button, buttonVariants } from "@/components/ui/button";
+import { FaCheck, FaMoneyBill, FaShoppingCart, FaTrash } from "react-icons/fa";
+import { GlobalContextType, ShoppingItem } from "@/types";
 import {
   Sheet,
   SheetContent,
@@ -7,12 +10,11 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { FaCheck, FaMoneyBill, FaShoppingCart, FaTrash } from "react-icons/fa";
-import { Button } from "@/components/ui/button";
-import { useGlobalState } from "@/context/ContextProvider";
 import Image from "next/image";
 import { Input } from "@/components/ui/input";
-import { GlobalContextType, ShoppingItem } from "@/types";
+import Link from "next/link";
+import { Separator } from "./ui/separator";
+import { useGlobalState } from "@/context/ContextProvider";
 
 // Single item of the shopping cart.
 const ShoppingCartItem = ({
@@ -122,7 +124,7 @@ export default function ShoppingCart() {
             Your current selected items...
           </SheetDescription>
         </SheetHeader>
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-4 overflow-scroll">
           {state.shoppingCart.length === 0 ? (
             <span className="text-3xl">Start buying...</span>
           ) : (
@@ -137,6 +139,26 @@ export default function ShoppingCart() {
             ))
           )}
         </div>
+        {state.shoppingCart.length > 0 && (
+          <>
+            <Separator className="my-2" />
+            <div className="flex items-center justify-around w-full border rounded p-2">
+              <span className="font-bold">
+                Total: $
+                {state.shoppingCart.reduce(
+                  (prev, cur) => (prev += cur.price * cur.amount),
+                  0
+                )}
+              </span>
+              <Link
+                href="finish"
+                className={buttonVariants({ variant: "default" })}
+              >
+                Finish Order
+              </Link>
+            </div>
+          </>
+        )}
       </SheetContent>
     </Sheet>
   );
