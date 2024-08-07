@@ -1,4 +1,4 @@
-import { CardSync } from "@/context/ContextProvider";
+import { CardSync } from "@/types";
 
 // Async function for adding the a game to a cart inside the database.
 export async function addToCart(gameId: string) {
@@ -62,9 +62,12 @@ export async function updateOnCart(gameId: string, amount: number) {
 // Async function for getting the latest saved cart in the server.
 export async function getCart(): Promise<CardSync> {
   const response = await fetch("/api/cart");
+
   if (!response.ok) {
-    throw new Error("Could not fetch the cart.");
+    const message = await response.text();
+    throw new Error("Could not fetch the cart.", { cause: message });
   }
+
   const data: CardSync = await response.json();
   return data;
 }

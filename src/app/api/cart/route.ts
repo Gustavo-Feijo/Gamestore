@@ -14,7 +14,9 @@ export const GET = auth(async function GET(req) {
     const data = await prisma.shoppingItems.findMany({
       where: { userId: userId },
       include: { game: { select: { price: true, name: true, image: true } } },
+      orderBy: { game: { name: "asc" } },
     });
+
     return new Response(JSON.stringify(data), { status: 200 });
   } catch (error) {
     console.error("Error fetching shopping items:", error);

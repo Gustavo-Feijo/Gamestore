@@ -19,6 +19,7 @@ import { Button } from "@/components/ui/button";
 import { FaShoppingCart } from "react-icons/fa";
 import { Prisma } from "@prisma/client";
 import { useGlobalState } from "@/context/ContextProvider";
+import Link from "next/link";
 
 // Type of the gamelist to be passed down.
 type GameList = Prisma.GameGetPayload<{ include: { Categories: true } }>[];
@@ -35,7 +36,10 @@ function GamesCarousel({ gameList }: { gameList: GameList }) {
         {gameList.map((game, index) => (
           <CarouselItem key={index}>
             <Card className="flex flex-col items-center min-h-full lg:flex-row overflow-hidden">
-              <div className="w-full aspect-[16/9] md:w-[640px] lg:h-auto relative">
+              <Link
+                href={`/games/${game.id}`}
+                className="w-full aspect-[16/9] md:w-[640px] lg:h-auto relative"
+              >
                 <Image
                   src={game.imageBg}
                   alt={game.name}
@@ -43,7 +47,7 @@ function GamesCarousel({ gameList }: { gameList: GameList }) {
                   width={640}
                   height={360}
                 />
-              </div>
+              </Link>
               <div className="flex flex-col justify-around flex-1 min-h-full">
                 <CardHeader className="flex-1 p-2">
                   <CardTitle className="text-3xl min-h-24 text-center flex items-center justify-center">

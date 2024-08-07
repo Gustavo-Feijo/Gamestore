@@ -5,14 +5,14 @@ import { FaHome } from "react-icons/fa";
 import SideBar from "./SideBar";
 import CategoriesMenu from "./CategoriesMenu";
 import { auth } from "@/auth";
-import ShoppingCart from "@/components/ShoppingCart/ShoppingCart";
+import ShoppingCart from "@/components/ShoppingCart";
 
 // TopBar for navigation through the app.
 async function TopBar() {
   // Get the current user session.
   const session = await auth();
   return (
-    <header className="h-20 w-full bg-secondary border-b-2 border-foreground flex items-center justify-center gap-4">
+    <header className="h-20 w-full bg-secondary border-b-2 border-foreground flex items-center justify-center gap-4 z-10">
       <div className="absolute left-4">
         <SideBar session={session} />
       </div>

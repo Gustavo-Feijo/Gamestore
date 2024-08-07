@@ -1,4 +1,4 @@
-import { SignIn, SignOut } from "@/components/SignInButton";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   Menubar,
   MenubarContent,
@@ -6,10 +6,10 @@ import {
   MenubarMenu,
   MenubarTrigger,
 } from "@/components/ui/menubar";
-import { Separator } from "@/components/ui/separator";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { SignIn, SignOut } from "@/components/SignInButton";
 import { FaUser } from "react-icons/fa";
 import Link from "next/link";
+import { Separator } from "@/components/ui/separator";
 import { Session } from "next-auth";
 
 // Function for handling user authentication.
@@ -39,8 +39,12 @@ async function UserAuth({ session }: { session: Session | null }) {
             </Link>
           </MenubarItem>
           <Separator className="my-2" />
-          <SignOut />
-          <MenubarItem>a</MenubarItem>
+          <div className="flex flex-col gap-3">
+            <SignOut />
+            <MenubarItem className="px-4 py-3 cursor-pointer" asChild>
+              <Link href="/orders">My Orders</Link>
+            </MenubarItem>
+          </div>
         </MenubarContent>
       </MenubarMenu>
     </Menubar>
