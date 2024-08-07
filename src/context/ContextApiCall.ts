@@ -1,4 +1,4 @@
-import { CardSync } from "@/context/ContextProvider";
+import { CardSync } from "@/types";
 
 // Async function for adding the a game to a cart inside the database.
 export async function addToCart(gameId: string) {

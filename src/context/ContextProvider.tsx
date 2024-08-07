@@ -6,7 +6,6 @@ import {
   useEffect,
   useState,
 } from "react";
-import { Prisma } from "@prisma/client";
 import { toast } from "sonner";
 import { GlobalContextType, InitialState, ShoppingItem } from "@/types";
 import {
@@ -16,11 +15,6 @@ import {
   updateOnCart,
 } from "@/context/ContextApiCall";
 
-// Type for the CardSync.
-export type CardSync = Prisma.ShoppingItemsGetPayload<{
-  include: { game: { select: { price: true; name: true; image: true } } };
-}>[];
-
 // Create the context.
 const GlobalState = createContext<GlobalContextType>({
   state: { shoppingCart: [] },
@@ -28,6 +22,7 @@ const GlobalState = createContext<GlobalContextType>({
   removeItem: async () => {},
   updateAmount: async () => {},
   confirmAmountUpdate: async () => {},
+  syncCart: async () => {},
 });
 
 // State provider.
@@ -178,7 +173,14 @@ export function GlobalStateProvider({ children }: { children: ReactNode }) {
 
   return (
     <GlobalState.Provider
-      value={{ state, addItem, removeItem, updateAmount, confirmAmountUpdate }}
+      value={{
+        state,
+        addItem,
+        removeItem,
+        updateAmount,
+        confirmAmountUpdate,
+        syncCart,
+      }}
     >
       {children}
     </GlobalState.Provider>
