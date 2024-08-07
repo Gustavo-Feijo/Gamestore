@@ -15,7 +15,7 @@ export async function fetchOrders(page: number) {
       where: { userId: session?.user?.id },
       take: pageSize,
       skip: pageSize * page,
-      include: { products: true },
+      include: { products: { include: { game: true } } },
     });
   }
   return null;

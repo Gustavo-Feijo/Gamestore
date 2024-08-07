@@ -28,9 +28,9 @@ export type CardSync = Prisma.ShoppingItemsGetPayload<{
 }>[];
 
 // Type for representing a order list.
-export type OrderList = Prisma.SalesGetPayload<{
-  include: { products: true };
-}>[];
+export type Order = Prisma.SalesGetPayload<{
+  include: { products: { include: { game: true } } };
+}>;
 
 export type GameInfo = Prisma.GameGetPayload<{
   include: {
