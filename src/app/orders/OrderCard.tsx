@@ -2,10 +2,11 @@ import { Order } from "@/types";
 import Image from "next/image";
 
 function OrderCard({ orderData }: { orderData: Order }) {
+  const orderCopy = orderData;
   return (
     <div className="h-40 bg-secondary">
       <div className="flex">
-        {orderData.products.splice(0, 2).map((game, index) => (
+        {orderCopy.products.slice(0, 2).map((game, index) => (
           <Image
             src={game.game.image}
             width={120}
