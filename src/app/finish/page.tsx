@@ -21,7 +21,7 @@ function FinishOrder() {
       await syncCart();
     };
     fetchCartStart();
-  }, []);
+  }, [syncCart]);
 
   return (
     <main>

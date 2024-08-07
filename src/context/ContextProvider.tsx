@@ -70,50 +70,44 @@ export function GlobalStateProvider({ children }: { children: ReactNode }) {
   );
 
   // Function to remove a item from the shopping cart.
-  const removeItem = useCallback(
-    async (gameId: string) => {
-      try {
-        // Remove the item from the cart.
-        // Any error will be propagated.
-        await removeFromCart(gameId);
+  const removeItem = useCallback(async (gameId: string) => {
+    try {
+      // Remove the item from the cart.
+      // Any error will be propagated.
+      await removeFromCart(gameId);
 
-        // Update the state by filtering the shopping cart for the item id.
-        setState((prevState) => ({
-          ...prevState,
-          shoppingCart: prevState.shoppingCart.filter(
-            (cur) => cur.gameId !== gameId
-          ),
-        }));
-
-        // Toast to show that the item was removed.
-        toast.success("The game was removed from your cart.", {
-          action: { label: "Okay", onClick: () => {} },
-        });
-      } catch (error) {
-        // Toast to show that a error happened.
-        if (error instanceof Error) {
-          toast.error("It wasn't possible to remove the game from your cart", {
-            description: (error.cause as string) || "No cause specified",
-          });
-        }
-      }
-    },
-    [state.shoppingCart]
-  );
-
-  // Function to update the amount of a item into the shopping cart.
-  const updateAmount = useCallback(
-    async (gameId: string, amount: number) => {
-      // Update the state by changing the amount of the item with the passed id.
+      // Update the state by filtering the shopping cart for the item id.
       setState((prevState) => ({
         ...prevState,
-        shoppingCart: prevState.shoppingCart.map((cur) =>
-          cur.gameId === gameId ? { ...cur, amount: amount } : cur
+        shoppingCart: prevState.shoppingCart.filter(
+          (cur) => cur.gameId !== gameId
         ),
       }));
-    },
-    [state.shoppingCart]
-  );
+
+      // Toast to show that the item was removed.
+      toast.success("The game was removed from your cart.", {
+        action: { label: "Okay", onClick: () => {} },
+      });
+    } catch (error) {
+      // Toast to show that a error happened.
+      if (error instanceof Error) {
+        toast.error("It wasn't possible to remove the game from your cart", {
+          description: (error.cause as string) || "No cause specified",
+        });
+      }
+    }
+  }, []);
+
+  // Function to update the amount of a item into the shopping cart.
+  const updateAmount = useCallback(async (gameId: string, amount: number) => {
+    // Update the state by changing the amount of the item with the passed id.
+    setState((prevState) => ({
+      ...prevState,
+      shoppingCart: prevState.shoppingCart.map((cur) =>
+        cur.gameId === gameId ? { ...cur, amount: amount } : cur
+      ),
+    }));
+  }, []);
 
   // Function to confirm the update of the amount and trigger the database.
   // Used for saving up databases calls, only being triggered when the use manually saves.
@@ -182,7 +176,7 @@ export function GlobalStateProvider({ children }: { children: ReactNode }) {
       await syncCart();
     };
     fetchCartStart();
-  }, []);
+  }, [syncCart]);
 
   return (
     <GlobalState.Provider
