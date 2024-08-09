@@ -2,7 +2,6 @@
 import { Separator } from "@/components/ui/separator";
 import Image from "next/image";
 import React from "react";
-import { motion } from "framer-motion";
 import { useGlobalState } from "@/context/ContextProvider";
 import Link from "next/link";
 import { FaShoppingCart } from "react-icons/fa";
@@ -14,11 +13,7 @@ function GameCard({ gameInfo }: { gameInfo: GameInfo }) {
   // State button for adding a game to the shopping cart.
   const { addItem } = useGlobalState();
   return (
-    <motion.div
-      className="w-full h-fit flex flex-col items-center bg-background p-2 shadow-sm shadow-foreground md:max-w-[1000px]"
-      initial={{ x: -100, opacity: 0 }}
-      animate={{ x: 0, opacity: 1, transition: { duration: 0.5 } }}
-    >
+    <div className="w-full h-fit flex flex-col items-center bg-background p-2 shadow-sm shadow-foreground md:max-w-[1000px]">
       <h1 className="text-4xl text-center">{gameInfo.name}</h1>
       <Separator className="my-2" />
       <div className="flex flex-col items-center justify-around md:flex-row">
@@ -78,7 +73,7 @@ function GameCard({ gameInfo }: { gameInfo: GameInfo }) {
           </Button>
         </div>
       </div>
-    </motion.div>
+    </div>
   );
 }
 
