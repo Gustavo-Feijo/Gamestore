@@ -67,9 +67,8 @@ model Game {
   name          String
   description   String
   image         String
-  imageBg       String          @default("DS3BG.jpg")
+  imageBg       String
   releaseDate   DateTime
-  storage       Int
   Categories    Categories[]
   Reviews       Review[]
   Developer     Developer       @relation(fields: [developerId], references: [id])
