@@ -23,7 +23,7 @@ function GameCard({ gameInfo }: { gameInfo: GameInfo }) {
           width={300}
           height={400}
         />
-        <div className="p-6 flex flex-col w-1/3 gap-2">
+        <div className="p-6 flex flex-col w-full gap-2 md:w-1/3">
           <p className="bg-secondary p-4 rounded">{gameInfo.description}</p>
           <div className="flex justify-between">
             <span>Release Date:</span>
