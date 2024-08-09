@@ -17,18 +17,14 @@ import {
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { FaShoppingCart } from "react-icons/fa";
-import { Prisma } from "@prisma/client";
 import { useGlobalState } from "@/context/ContextProvider";
 import Link from "next/link";
-
-// Type of the gamelist to be passed down.
-type GameList = Prisma.GameGetPayload<{ include: { Categories: true } }>[];
+import { GameList } from "@/types";
 
 // Carousel containing cards of games.
 function GamesCarousel({ gameList }: { gameList: GameList }) {
   // Get the addItem function to add a Item to the shopping cart.
   const { addItem } = useGlobalState();
-
   //Carousel containing the games cards with images, information and button to buy.
   return (
     <Carousel className="shadow-lg shadow-black" opts={{ loop: true }}>
