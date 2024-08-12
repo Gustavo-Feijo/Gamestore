@@ -98,8 +98,11 @@ export default function ShoppingCart() {
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button variant="ghost">
+        <Button variant="ghost" className="relative">
           <FaShoppingCart className="text-4xl" />
+          <span className="absolute text-foreground bg-background rounded-full w-6 h-6 border-foreground border right-2 bottom-0">
+            {state.shoppingCart.length}
+          </span>
         </Button>
       </SheetTrigger>
       <SheetContent
