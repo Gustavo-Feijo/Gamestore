@@ -49,7 +49,7 @@ function GamesCarousel({ gameList }: { gameList: GameList }) {
                   <CardTitle className="text-3xl min-h-24 text-center flex items-center justify-center">
                     {game.name}
                   </CardTitle>
-                  <CardDescription className="h-14 max-h-14 overflow-scroll">
+                  <CardDescription className="h-14 max-h-14 overflow-y-auto">
                     {game.description}
                   </CardDescription>
                 </CardHeader>
