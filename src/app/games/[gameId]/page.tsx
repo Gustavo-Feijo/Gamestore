@@ -2,6 +2,7 @@ import prisma from "@/server/db";
 import { notFound } from "next/navigation";
 import React from "react";
 import GameCard from "./GameCard";
+import ReviewCard from "./ReviewCard";
 
 // Page for a specific game.
 async function GamePage({ params }: { params: { gameId: string } }) {
@@ -18,7 +19,6 @@ async function GamePage({ params }: { params: { gameId: string } }) {
   if (!game) {
     return notFound();
   }
-
   return (
     <main className="relative min-h-[calc(100dvh-80px)]">
       <div
@@ -28,8 +28,9 @@ async function GamePage({ params }: { params: { gameId: string } }) {
           backgroundSize: "1920px 1080px",
         }}
       />
-      <div className="relative z-10 flex items-center justify-center h-full p-6">
+      <div className="relative z-10 flex flex-col gap-10 items-center justify-center h-full p-6">
         <GameCard gameInfo={game} />
+        <ReviewCard gameId={params.gameId} />
       </div>
     </main>
   );
