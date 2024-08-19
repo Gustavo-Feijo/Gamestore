@@ -33,10 +33,10 @@ The currently employed technologies are as follow:
 - [X] Implement Auth.js.
 - [X] Create initial database setup.
 - [X] Create basic UI starting point.
-- [ ] Implement fully functional TopBar with SideBar menu.
+- [X] Implement fully functional TopBar with SideBar menu.
 - [ ] Create starting page.
 - [ ] Create functional Games page.
-- [ ] Add functional Shopping Cart.
+- [X] Add functional Shopping Cart.
 - [ ] Create management Dashboards.
 - [ ] Seeding for the database.
 - [ ] Create sales process.
