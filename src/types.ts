@@ -32,6 +32,9 @@ export type OrderData = Prisma.SalesGetPayload<{
   include: { products: { include: { game: true } } };
 }>;
 
+export type ReviewData = Prisma.ReviewGetPayload<{
+  select: { review: true; score: true; title: true; createAt: true; id: true };
+}>;
 export type GameInfo = Prisma.GameGetPayload<{
   include: {
     Categories: { select: { id: true; name: true } };
