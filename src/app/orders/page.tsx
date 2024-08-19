@@ -1,5 +1,4 @@
 "use client";
-import { fetchOrders } from "@/actions";
 import { OrderData } from "@/types";
 import { useEffect, useState } from "react";
 import OrderCard from "./OrderCard";
@@ -12,22 +11,28 @@ export default function OrderPage() {
   // Pseudo page, since we are using only one single page and appending the results.
   const [page, setPage] = useState<number>(0);
   const [hasMore, setHasMore] = useState<boolean>(true);
-
   useEffect(() => {
-    // Async wrapper for the useEffect.
-    async function loadOrders() {
-      // Call a server action for getting the orders from a given page.
-      const newOrders = await fetchOrders(page);
-
-      // Verify if there are onew orders and add then to the order list.
-      // Else disable the show more button.
-      if (newOrders && newOrders.length > 0) {
-        setOrders((prev) => [...prev, ...newOrders]);
-      } else {
-        setHasMore(false);
+    const fetchData = async () => {
+      try {
+        const response = await fetch(`/api/orders?page=${page}`);
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        const result: any[] = await response.json();
+        if (result && result.length > 0) {
+          // Convert each new result to a date.
+          result.forEach(
+            (result) => (result.createAt = new Date(result.createAt))
+          );
+          setOrders((prev) => [...prev, ...result]);
+        } else {
+          setHasMore(false);
+        }
+      } catch (error) {
+        console.log(error);
       }
-    }
-    loadOrders();
+    };
+    fetchData();
   }, [page]);
 
   // Add one for the page.
