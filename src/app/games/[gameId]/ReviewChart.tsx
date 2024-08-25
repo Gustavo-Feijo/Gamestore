@@ -1,5 +1,4 @@
 "use client";
-
 import {
   Bar,
   BarChart,
@@ -12,7 +11,6 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -22,7 +20,6 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-import { TrendingUp } from "lucide-react";
 import { useMemo } from "react";
 
 const chartConfig = {
@@ -71,7 +68,10 @@ export default function ReviewChart({
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <ChartContainer config={chartConfig} className="min-h-40 md:min-h-60">
+        <ChartContainer
+          config={chartConfig}
+          className="min-h-40 md:min-h-60 border rounded p-2"
+        >
           <BarChart
             accessibilityLayer
             data={scoresPercentage}

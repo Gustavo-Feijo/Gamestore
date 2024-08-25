@@ -12,12 +12,12 @@ async function TopBar() {
   // Get the current user session.
   const session = await auth();
   return (
-    <header className="h-20 w-full bg-secondary border-b-2 border-foreground flex items-center justify-center gap-4 z-10">
-      <div className="absolute left-4">
+    <header className="h-20 w-full bg-secondary border-b-2 border-foreground flex items-center justify-center gap-4 z-50">
+      <div className="flex lg:hidden absolute left-4">
         <SideBar session={session} />
       </div>
       {session && (
-        <div className="absolute right-4">
+        <div className="absolute right-4 z-10">
           <ShoppingCart />
         </div>
       )}
@@ -30,7 +30,7 @@ async function TopBar() {
       <div className="flex items-center w-2/4 lg:flex-1">
         <SearchBar />
       </div>
-      <div className="flex-1 hidden lg:flex items-center ">
+      <div className="flex-1 hidden lg:flex items-center relative ">
         <UserAuth session={session} />
       </div>
     </header>

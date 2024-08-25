@@ -4,12 +4,11 @@ import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { toast } from "sonner";
 import { useGlobalState } from "@/context/ContextProvider";
-
+import QRCode from "qrcode.react";
 // Page for handling order finishing.
 function FinishOrder() {
   // State functions for handling the changes on the database.
-  const { syncCart, removeItem, updateAmount, state, confirmAmountUpdate } =
-    useGlobalState();
+  const { syncCart } = useGlobalState();
 
   // useState for receiving a payment QR code.
   // Pseudo payment link used just with a get request as example.
@@ -21,7 +20,7 @@ function FinishOrder() {
       await syncCart();
     };
     fetchCartStart();
-  }, [syncCart]);
+  }, [qrCode]);
 
   return (
     <main>
@@ -37,14 +36,15 @@ function FinishOrder() {
             toast.error(message);
           } else {
             const data = await response.json();
-            setQrCode(data.QR);
-            syncCart();
+            setQrCode(`http://localhost:3000/api/payment/${data.orderId}`);
           }
         }}
       >
         Finish Order
       </Button>
-      {qrCode && <Image src={qrCode} alt="a" width={300} height={300} />}
+      {qrCode && (
+        <QRCode value={qrCode} size={256} level="H" includeMargin={true} />
+      )}
     </main>
   );
 }
