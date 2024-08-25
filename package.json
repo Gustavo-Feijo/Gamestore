@@ -22,14 +22,12 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "embla-carousel-react": "^8.1.7",
-    "lodash": "^4.17.21",
     "lucide-react": "^0.414.0",
     "next": "14.2.5",
     "next-auth": "^5.0.0-beta.19",
     "next-themes": "^0.3.0",
     "prisma": "^5.17.0",
-    "qrcode": "^1.5.4",
-    "qrcode.react": "^3.1.0",
+    "qrcode": "^1.5.3",
     "react": "^18",
     "react-dom": "^18",
     "react-icons": "^5.2.1",
@@ -40,7 +38,6 @@
     "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
-    "@types/lodash": "^4.17.7",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",

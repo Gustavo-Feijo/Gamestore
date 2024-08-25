@@ -42,10 +42,13 @@ export const POST = auth(async function POST(req) {
     // Clear the client shopping cart.
     await prisma.shoppingItems.deleteMany({ where: { userId: userId } });
 
+    // Creates a QR code with the payment URL.
+    // In that case, since we are not implementing this, send a random link.
+    const QR = await QRCode.toDataURL(
+      "http://localhost:3000/api/payment/" + result.id
+    );
     // Return a sucessful response.
-    return new Response(JSON.stringify({ orderId: result.id }), {
-      status: 200,
-    });
+    return new Response(JSON.stringify({ QR }), { status: 200 });
   } catch (error) {
     console.error("Error finishing order:", error);
     return new Response("Internal Server Error", { status: 500 });
