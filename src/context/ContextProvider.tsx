@@ -151,6 +151,8 @@ export function GlobalStateProvider({ children }: { children: ReactNode }) {
             ...game,
           })),
         });
+      } else {
+        setState({ shoppingCart: [] });
       }
 
       // Toast to show that the cart was synchronized.
