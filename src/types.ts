@@ -45,3 +45,12 @@ export type GameInfo = Prisma.GameGetPayload<{
 export type GameList = Prisma.GameGetPayload<{
   include: { Categories: true };
 }>[];
+
+export type SearchResultType = Prisma.GameGetPayload<{
+  select: {
+    id: true;
+    name: true;
+    image: true;
+    Developer: { select: { name: true } };
+  };
+}>[];
