@@ -154,7 +154,7 @@ export default function ShoppingCart() {
                 )}
               </span>
               <Link
-                href="finish"
+                href="/finish"
                 className={buttonVariants({ variant: "default" })}
               >
                 Finish Order
