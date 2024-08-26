@@ -11,6 +11,7 @@ export default function OrderPage() {
   // Pseudo page, since we are using only one single page and appending the results.
   const [page, setPage] = useState<number>(0);
   const [hasMore, setHasMore] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(true);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -28,8 +29,9 @@ export default function OrderPage() {
         } else {
           setHasMore(false);
         }
+        setLoading(false);
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
     };
     fetchData();
@@ -42,22 +44,30 @@ export default function OrderPage() {
 
   return (
     <main className="flex justify-center items-center px-6 py-10 xl:px-60">
-      <div>
-        {orders.length > 0 ? (
-          <div className="grid gap-4 lg:grid-cols-2 2xl:grid-cols-3">
-            {orders.map((order, index) => (
-              <OrderCard orderData={order} key={index} />
-            ))}
-            {hasMore && (
-              <Button onClick={handleMore} variant={"outline"} className="h-50">
-                Show More
-              </Button>
-            )}
-          </div>
-        ) : (
-          <div>No orders found.</div>
-        )}
-      </div>
+      {loading ? (
+        <span className="text-5xl">Loading...</span>
+      ) : (
+        <div>
+          {orders.length > 0 ? (
+            <div className="grid gap-4 lg:grid-cols-2 2xl:grid-cols-3">
+              {orders.map((order, index) => (
+                <OrderCard orderData={order} key={index} />
+              ))}
+              {hasMore && (
+                <Button
+                  onClick={handleMore}
+                  variant={"outline"}
+                  className="h-50"
+                >
+                  Show More
+                </Button>
+              )}
+            </div>
+          ) : (
+            <div>No orders found.</div>
+          )}
+        </div>
+      )}
     </main>
   );
 }
