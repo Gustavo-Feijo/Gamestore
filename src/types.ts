@@ -32,9 +32,12 @@ export type OrderData = Prisma.SalesGetPayload<{
   include: { products: { include: { game: true } } };
 }>;
 
+// Type for the reviews.
 export type ReviewData = Prisma.ReviewGetPayload<{
   select: { review: true; score: true; title: true; createAt: true; id: true };
 }>;
+
+// Type for a game information.
 export type GameInfo = Prisma.GameGetPayload<{
   include: {
     Categories: { select: { id: true; name: true } };
@@ -42,10 +45,12 @@ export type GameInfo = Prisma.GameGetPayload<{
   };
 }>;
 
+// Type of the list of games passed to the main games carousel..
 export type GameList = Prisma.GameGetPayload<{
   include: { Categories: true };
 }>[];
 
+// Type for the result of a search.
 export type SearchResultType = Prisma.GameGetPayload<{
   select: {
     id: true;
@@ -54,3 +59,8 @@ export type SearchResultType = Prisma.GameGetPayload<{
     Developer: { select: { name: true } };
   };
 }>[];
+
+// Type for a product entry in a order.
+export type OrderProductEntryType = Prisma.SaleProductGetPayload<{
+  include: { game: { select: { price: true; image: true; name: true } } };
+}>;
