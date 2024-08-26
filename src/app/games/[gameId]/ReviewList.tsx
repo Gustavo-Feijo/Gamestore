@@ -39,7 +39,7 @@ export default function ReviewList({ gameId }: { gameId: string }) {
       }
     };
     fetchData();
-  }, [page]);
+  }, [page, gameId]);
 
   // Add one for the page.
   const handleMore = () => {

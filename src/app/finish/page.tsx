@@ -19,7 +19,7 @@ function FinishOrder() {
       await syncCart();
     };
     fetchCartStart();
-  }, [qrCode]);
+  }, [syncCart]);
 
   return (
     <main>
