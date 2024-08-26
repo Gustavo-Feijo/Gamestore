@@ -20,14 +20,26 @@ import { FaShoppingCart } from "react-icons/fa";
 import { useGlobalState } from "@/context/ContextProvider";
 import Link from "next/link";
 import { GameList } from "@/types";
+import Autoplay from "embla-carousel-autoplay";
+import { useRef } from "react";
 
 // Carousel containing cards of games.
 function GamesCarousel({ gameList }: { gameList: GameList }) {
   // Get the addItem function to add a Item to the shopping cart.
   const { addItem } = useGlobalState();
+
+  // Plugin for autoplay of the carousel.
+  const plugin = useRef(Autoplay({ delay: 3000, stopOnInteraction: true }));
+
   //Carousel containing the games cards with images, information and button to buy.
   return (
-    <Carousel className="shadow-lg shadow-black" opts={{ loop: true }}>
+    <Carousel
+      className="shadow-lg shadow-black"
+      opts={{ loop: true }}
+      plugins={[plugin.current]}
+      onMouseEnter={plugin.current.stop}
+      onMouseLeave={plugin.current.reset}
+    >
       <CarouselContent className="w-[calc(100vw-100px)] sm:w-[580px] lg:w-[1000px]">
         {gameList.map((game, index) => (
           <CarouselItem key={index}>
