@@ -4,7 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import TopBar from "@/components/TopBar/TopBar";
 import { cn } from "@/lib/utils";
-import { GlobalStateProvider } from "@/context/ContextProvider";
+import { ShoppingCartStateProvider } from "@/context/ContextProvider";
 import { Toaster } from "@/components/ui/sonner";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -22,7 +22,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={cn("flex flex-col min-h-screen", inter.className)}>
-        <GlobalStateProvider>
+        <ShoppingCartStateProvider>
           <ThemeProvider
             defaultTheme="dark"
             attribute="class"
@@ -33,7 +33,7 @@ export default function RootLayout({
             {children}
             <Toaster duration={2000} richColors={true} />
           </ThemeProvider>
-        </GlobalStateProvider>
+        </ShoppingCartStateProvider>
       </body>
     </html>
   );

@@ -9,12 +9,9 @@ export type ShoppingItem = {
   amount: number;
 };
 
-// Initial State.
-export type InitialState = { shoppingCart: ShoppingItem[] };
-
 // Type for the global context.
-export type GlobalContextType = {
-  state: InitialState;
+export type ShoppingCartContextType = {
+  shoppingCart: ShoppingItem[];
   addItem: (item: ShoppingItem) => Promise<void>;
   removeItem: (gameId: string) => Promise<void>;
   updateAmount: (gameId: string, amount: number) => Promise<void>;

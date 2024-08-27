@@ -5,20 +5,21 @@ import {
   useCallback,
   useContext,
   useEffect,
-  useState,
+  useReducer,
 } from "react";
 import { toast } from "sonner";
-import { GlobalContextType, InitialState, ShoppingItem } from "@/types";
+import { ShoppingCartContextType, ShoppingItem } from "@/types";
 import {
   addToCart,
   getCart,
   removeFromCart,
   updateOnCart,
 } from "@/context/ContextApiCall";
+import reducer from "./Reducer";
 
 // Create the context.
-const GlobalState = createContext<GlobalContextType>({
-  state: { shoppingCart: [] },
+const ShoppingCartState = createContext<ShoppingCartContextType>({
+  shoppingCart: [],
   addItem: async () => {},
   removeItem: async () => {},
   updateAmount: async () => {},
@@ -27,31 +28,29 @@ const GlobalState = createContext<GlobalContextType>({
 });
 
 // State provider.
-export function GlobalStateProvider({ children }: { children: ReactNode }) {
+export function ShoppingCartStateProvider({
+  children,
+}: {
+  children: ReactNode;
+}) {
   // The state instance.
-  const [state, setState] = useState<InitialState>({ shoppingCart: [] });
+  const [state, dispatch] = useReducer(reducer, []);
 
   // Function for adding a new item to the state.
   const addItem = useCallback(
     async (item: ShoppingItem) => {
       try {
         // Verify if there is any duplicate inside the state.
-        const isDuplicate = state.shoppingCart.some(
-          (cur) => cur.gameId === item.gameId
-        );
+        const isDuplicate = state.some((cur) => cur.gameId === item.gameId);
         // Throw a error if it's duplicated.
         if (isDuplicate) {
           throw new Error("Could not add to cart.", {
             cause: "Game already on the shopping cart.",
           });
         }
-        // Add the item to the database.
+        // Add the item to the cart.
         await addToCart(item.gameId);
-
-        // Update the state
-        setState((prevState) => ({
-          shoppingCart: [...prevState.shoppingCart, item],
-        }));
+        dispatch({ type: "ADD_ITEM", payload: item });
 
         // Toast to show that the item was added.
         toast.success("The game was added to your cart.", {
@@ -66,7 +65,7 @@ export function GlobalStateProvider({ children }: { children: ReactNode }) {
         }
       }
     },
-    [state.shoppingCart]
+    [state]
   );
 
   // Function to remove a item from the shopping cart.
@@ -75,14 +74,7 @@ export function GlobalStateProvider({ children }: { children: ReactNode }) {
       // Remove the item from the cart.
       // Any error will be propagated.
       await removeFromCart(gameId);
-
-      // Update the state by filtering the shopping cart for the item id.
-      setState((prevState) => ({
-        ...prevState,
-        shoppingCart: prevState.shoppingCart.filter(
-          (cur) => cur.gameId !== gameId
-        ),
-      }));
+      dispatch({ type: "REMOVE_ITEM", payload: gameId });
 
       // Toast to show that the item was removed.
       toast.success("The game was removed from your cart.", {
@@ -100,13 +92,8 @@ export function GlobalStateProvider({ children }: { children: ReactNode }) {
 
   // Function to update the amount of a item into the shopping cart.
   const updateAmount = useCallback(async (gameId: string, amount: number) => {
-    // Update the state by changing the amount of the item with the passed id.
-    setState((prevState) => ({
-      ...prevState,
-      shoppingCart: prevState.shoppingCart.map((cur) =>
-        cur.gameId === gameId ? { ...cur, amount: amount } : cur
-      ),
-    }));
+    // Update the state.
+    dispatch({ type: "UPDATE_AMOUNT", payload: { gameId, amount } });
   }, []);
 
   // Function to confirm the update of the amount and trigger the database.
@@ -115,7 +102,7 @@ export function GlobalStateProvider({ children }: { children: ReactNode }) {
     async (gameId: string) => {
       try {
         // Get the amount from the state.
-        const amount = state.shoppingCart.find((cur) => cur.gameId == gameId);
+        const amount = state.find((cur) => cur.gameId == gameId);
         if (amount) {
           await updateOnCart(gameId, amount.amount);
         }
@@ -136,7 +123,7 @@ export function GlobalStateProvider({ children }: { children: ReactNode }) {
         }
       }
     },
-    [state.shoppingCart]
+    [state]
   );
 
   // Async function to sync the cart with the database.
@@ -144,16 +131,7 @@ export function GlobalStateProvider({ children }: { children: ReactNode }) {
     try {
       // Get the data from the api and apply it to the cart.
       const data = await getCart();
-      if (data.length > 0) {
-        setState({
-          shoppingCart: data.map(({ game, userId, ...item }) => ({
-            ...item,
-            ...game,
-          })),
-        });
-      } else {
-        setState({ shoppingCart: [] });
-      }
+      dispatch({ type: "SYNC_CART", payload: data });
 
       // Toast to show that the cart was synchronized.
       toast.success(
@@ -181,9 +159,9 @@ export function GlobalStateProvider({ children }: { children: ReactNode }) {
   }, [syncCart]);
 
   return (
-    <GlobalState.Provider
+    <ShoppingCartState.Provider
       value={{
-        state,
+        shoppingCart: state,
         addItem,
         removeItem,
         updateAmount,
@@ -192,10 +170,10 @@ export function GlobalStateProvider({ children }: { children: ReactNode }) {
       }}
     >
       {children}
-    </GlobalState.Provider>
+    </ShoppingCartState.Provider>
   );
 }
 
-export function useGlobalState() {
-  return useContext(GlobalState);
+export function useShoppingCart() {
+  return useContext(ShoppingCartState);
 }

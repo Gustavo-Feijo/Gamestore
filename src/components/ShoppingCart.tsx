@@ -1,7 +1,7 @@
 "use client";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { FaCheck, FaMoneyBill, FaShoppingCart, FaTrash } from "react-icons/fa";
-import { GlobalContextType, ShoppingItem } from "@/types";
+import { ShoppingCartContextType, ShoppingItem } from "@/types";
 import {
   Sheet,
   SheetContent,
@@ -14,7 +14,7 @@ import Image from "next/image";
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
 import { Separator } from "./ui/separator";
-import { useGlobalState } from "@/context/ContextProvider";
+import { useShoppingCart } from "@/context/ContextProvider";
 
 // Single item of the shopping cart.
 const ShoppingCartItem = ({
@@ -24,10 +24,10 @@ const ShoppingCartItem = ({
   confirmAmountUpdate,
 }: {
   item: ShoppingItem;
-  updateAmount: Pick<GlobalContextType, "updateAmount">["updateAmount"];
-  removeItem: Pick<GlobalContextType, "removeItem">["removeItem"];
+  updateAmount: Pick<ShoppingCartContextType, "updateAmount">["updateAmount"];
+  removeItem: Pick<ShoppingCartContextType, "removeItem">["removeItem"];
   confirmAmountUpdate: Pick<
-    GlobalContextType,
+    ShoppingCartContextType,
     "confirmAmountUpdate"
   >["confirmAmountUpdate"];
 }) => {
@@ -92,16 +92,15 @@ const ShoppingCartItem = ({
 // Shopping cart.
 export default function ShoppingCart() {
   // Get the functions for changing the global state.
-  const { state, removeItem, updateAmount, confirmAmountUpdate } =
-    useGlobalState();
-
+  const { shoppingCart, removeItem, updateAmount, confirmAmountUpdate } =
+    useShoppingCart();
   return (
     <Sheet>
       <SheetTrigger asChild>
         <Button variant="ghost" className="relative">
           <FaShoppingCart className="text-4xl" />
           <span className="absolute text-foreground bg-background rounded-full w-6 h-6 border-foreground border right-2 bottom-0">
-            {state.shoppingCart.length}
+            {shoppingCart.length}
           </span>
         </Button>
       </SheetTrigger>
@@ -128,10 +127,10 @@ export default function ShoppingCart() {
           </SheetDescription>
         </SheetHeader>
         <div className="flex flex-col gap-4 overflow-scroll">
-          {state.shoppingCart.length === 0 ? (
+          {shoppingCart.length === 0 ? (
             <span className="text-3xl">Start buying...</span>
           ) : (
-            state.shoppingCart.map((item, index) => (
+            shoppingCart.map((item, index) => (
               <ShoppingCartItem
                 key={index}
                 item={item}
@@ -142,13 +141,13 @@ export default function ShoppingCart() {
             ))
           )}
         </div>
-        {state.shoppingCart.length > 0 && (
+        {shoppingCart.length > 0 && (
           <>
             <Separator className="my-2" />
             <div className="flex items-center justify-around w-full border rounded p-2">
               <span className="font-bold">
                 Total: $
-                {state.shoppingCart.reduce(
+                {shoppingCart.reduce(
                   (prev, cur) => (prev += cur.price * cur.amount),
                   0
                 )}

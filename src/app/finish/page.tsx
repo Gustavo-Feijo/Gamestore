@@ -2,12 +2,12 @@
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
-import { useGlobalState } from "@/context/ContextProvider";
+import { useShoppingCart } from "@/context/ContextProvider";
 import QRCode from "qrcode.react";
 // Page for handling order finishing.
 function FinishOrder() {
   // State functions for handling the changes on the database.
-  const { syncCart } = useGlobalState();
+  const { syncCart } = useShoppingCart();
 
   // useState for receiving a payment QR code.
   // Pseudo payment link used just with a get request as example.

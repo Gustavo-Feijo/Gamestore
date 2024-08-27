@@ -2,7 +2,7 @@
 import { Separator } from "@/components/ui/separator";
 import Image from "next/image";
 import React from "react";
-import { useGlobalState } from "@/context/ContextProvider";
+import { useShoppingCart } from "@/context/ContextProvider";
 import Link from "next/link";
 import { FaShoppingCart } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
@@ -11,7 +11,7 @@ import { GameInfo } from "@/types";
 // Client component containing the game information.
 function GameCard({ gameInfo }: { gameInfo: GameInfo }) {
   // State button for adding a game to the shopping cart.
-  const { addItem } = useGlobalState();
+  const { addItem } = useShoppingCart();
   return (
     <div className="w-full h-fit flex flex-col items-center bg-background p-2 shadow-sm shadow-foreground md:max-w-[1000px]">
       <h1 className="text-4xl text-center">{gameInfo.name}</h1>

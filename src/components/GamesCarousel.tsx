@@ -17,7 +17,7 @@ import {
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { FaShoppingCart } from "react-icons/fa";
-import { useGlobalState } from "@/context/ContextProvider";
+import { useShoppingCart } from "@/context/ContextProvider";
 import Link from "next/link";
 import { GameList } from "@/types";
 import Autoplay from "embla-carousel-autoplay";
@@ -26,7 +26,7 @@ import { useRef } from "react";
 // Carousel containing cards of games.
 function GamesCarousel({ gameList }: { gameList: GameList }) {
   // Get the addItem function to add a Item to the shopping cart.
-  const { addItem } = useGlobalState();
+  const { addItem } = useShoppingCart();
 
   // Plugin for autoplay of the carousel.
   const plugin = useRef(Autoplay({ delay: 3000, stopOnInteraction: true }));
