@@ -3,7 +3,6 @@ import SearchBar from "./SearchBar";
 import UserAuth from "./UserAuth";
 import { FaHome } from "react-icons/fa";
 import SideBar from "./SideBar";
-import CategoriesMenu from "./CategoriesMenu";
 import { auth } from "@/auth";
 import ShoppingCart from "@/components/ShoppingCart";
 
@@ -21,11 +20,10 @@ async function TopBar() {
           <ShoppingCart />
         </div>
       )}
-      <div className="flex-1 items-center justify-end gap-4 hidden lg:flex">
-        <Link href="/">
+      <div className="flex-1 items-center hidden lg:flex">
+        <Link href="/" className="ml-4">
           <FaHome className="text-4xl transition-colors duration-300 hover:text-background" />
         </Link>
-        <CategoriesMenu />
       </div>
       <div className="flex items-center w-2/4 lg:flex-1">
         <SearchBar />

@@ -22,12 +22,8 @@ const buttonList = [
     label: "Home",
   },
   {
-    href: "/store",
-    label: "Store",
-  },
-  {
-    href: "/categories",
-    label: "Categories",
+    href: "/orders",
+    label: "My Orders",
   },
 ];
 //Function that returns a Sheet/SideBar containing some links.

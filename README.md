@@ -5,12 +5,15 @@
 This project is a e-commerce project.
 It uses Next.js, alongside with ShadcnUI components, Auth.js and Prisma.
 The main goal of the project is to create a good looking UI, while developing a working product.
+Most of the main functionalities will be using mocking systems, like payment.
+Seeding will be used for providing the bare minimum for the UI.
+Aiming to mantain the scope, management pages will not be added, such as adding new entries of games, categories, etc.
 
 ---
+
 ## Functionalities
 
 The expected functionalities are as follow:
-- Admin dashboard with the CRUD for games, categories, developers, etc.
 - Mocking sales system, with shopping cart, sales history, etc.
 - Authentication for each user.
 - Review system.
@@ -27,6 +30,7 @@ The currently employed technologies are as follow:
 -Auth.js
 
 ---
+
 ## TODO
 
 - [X] Initiate the project.
@@ -37,9 +41,8 @@ The currently employed technologies are as follow:
 - [ ] Create starting page.
 - [ ] Create functional Games page.
 - [X] Add functional Shopping Cart.
-- [ ] Create management Dashboards.
 - [ ] Seeding for the database.
-- [ ] Create sales process.
+- [X] Create pseudo payment process.
 - [ ] Improve database structure.
 - [ ] Add responsivity.
 - [ ] Add Theme changer and improve the themes visual.

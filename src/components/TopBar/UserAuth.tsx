@@ -24,19 +24,15 @@ async function UserAuth({ session }: { session: Session | null }) {
     <Menubar>
       <MenubarMenu>
         <MenubarTrigger className="cursor-pointer">
-          <span>{session.user?.name}</span>
+          <span className="max-w-32">{session.user?.name}</span>
           <FaUser className="text-lg ml-2" />
         </MenubarTrigger>
         <MenubarContent className="min-w-40 h-fit flex flex-col items-center justify-center p-4">
-          <MenubarItem className="cursor-pointer" asChild>
-            <Link href="/">
-              <Avatar className="h-12 w-12">
-                {session.user?.image && (
-                  <AvatarImage src={session.user?.image} />
-                )}
-                <AvatarFallback>IMG</AvatarFallback>
-              </Avatar>
-            </Link>
+          <MenubarItem>
+            <Avatar className="h-12 w-12">
+              {session.user?.image && <AvatarImage src={session.user?.image} />}
+              <AvatarFallback>IMG</AvatarFallback>
+            </Avatar>
           </MenubarItem>
           <Separator className="my-2" />
           <div className="flex flex-col gap-3">

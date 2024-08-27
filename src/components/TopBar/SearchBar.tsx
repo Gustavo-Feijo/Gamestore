@@ -50,10 +50,8 @@ function SearchBar() {
         placeholder="Search..."
         className="h-12 rounded-xl"
         onChange={(e) => setSearch(e.target.value)}
+        value={search}
       />
-      <Button className="absolute right-4 rounded-full h-4/5" variant="outline">
-        <FaSearch />
-      </Button>
       {searchResult.length > 0 && (
         <nav className="absolute top-full mt-1 min-w-full p-2 rounded-lg bg-background border flex flex-col gap-2">
           {searchResult.map((result, index) => (

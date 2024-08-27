@@ -33,24 +33,17 @@ function GameCard({ gameInfo }: { gameInfo: GameInfo }) {
           </div>
           <div className="flex items-center gap-3">
             <span>Developer:</span>
-            <Link
-              href={`/developer/${gameInfo.Developer.id}`}
-              className="p-2 bg-secondary rounded"
-            >
+            <div className="p-2 bg-secondary rounded">
               {gameInfo.Developer.name}
-            </Link>
+            </div>
           </div>
           <div className="flex items-center">
             <span>Categories:</span>
             <div className="flex p-2 gap-2 overflow-scroll">
               {gameInfo.Categories.map((category, index) => (
-                <Link
-                  href={`/category/${category.id}`}
-                  className="p-2 bg-secondary rounded"
-                  key={index}
-                >
+                <div className="p-2 bg-secondary rounded" key={index}>
                   {category.name}
-                </Link>
+                </div>
               ))}
             </div>
           </div>
