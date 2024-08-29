@@ -4,10 +4,17 @@ import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { useShoppingCart } from "@/context/ContextProvider";
 import QRCode from "qrcode.react";
+import { ShoppingCartItem } from "@/components/ShoppingCart";
 // Page for handling order finishing.
 function FinishOrder() {
   // State functions for handling the changes on the database.
-  const { syncCart } = useShoppingCart();
+  const {
+    syncCart,
+    shoppingCart,
+    confirmAmountUpdate,
+    removeItem,
+    updateAmount,
+  } = useShoppingCart();
 
   // useState for receiving a payment QR code.
   // Pseudo payment link used just with a get request as example.
@@ -22,28 +29,51 @@ function FinishOrder() {
   }, [syncCart]);
 
   return (
-    <main>
-      <Button
-        className="bg-green-300"
-        onClick={async () => {
-          const response = await fetch(
-            "http://localhost:3000/api/finishOrder",
-            { method: "POST" }
-          );
-          if (!response.ok) {
-            const message = await response.text();
-            toast.error(message);
-          } else {
-            const data = await response.json();
-            setQrCode(`http://localhost:3000/api/payment/${data.orderId}`);
-          }
-        }}
-      >
-        Finish Order
-      </Button>
-      {qrCode && (
-        <QRCode value={qrCode} size={256} level="H" includeMargin={true} />
-      )}
+    <main className="flex flex-col items-center gap-4 pt-10">
+      <span className="text-4xl">Games:</span>
+      <div className="grid grid-cols-1 gap-4 border rounded p-2 md:grid-cols-2">
+        {shoppingCart.length > 0 &&
+          shoppingCart.map((item, index) => (
+            <ShoppingCartItem
+              key={index}
+              item={item}
+              updateAmount={updateAmount}
+              removeItem={removeItem}
+              confirmAmountUpdate={confirmAmountUpdate}
+            />
+          ))}
+      </div>
+      <div className="flex flex-col gap-2 border rounded py-2 px-4">
+        <span className="text-2xl p-2">
+          Total:
+          {shoppingCart.reduce(
+            (acc, cur) => (acc += cur.amount * cur.price),
+            0
+          )}
+          $
+        </span>
+        <Button
+          className="bg-green-300 text-black"
+          onClick={async () => {
+            const response = await fetch(
+              "http://localhost:3000/api/finishOrder",
+              { method: "POST" }
+            );
+            if (!response.ok) {
+              const message = await response.text();
+              toast.error(message);
+            } else {
+              const data = await response.json();
+              setQrCode(`http://localhost:3000/api/payment/${data.orderId}`);
+            }
+          }}
+        >
+          Finish Order
+        </Button>
+        {qrCode && (
+          <QRCode value={qrCode} size={256} level="H" includeMargin={true} />
+        )}
+      </div>
     </main>
   );
 }
