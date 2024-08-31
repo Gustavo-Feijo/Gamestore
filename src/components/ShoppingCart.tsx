@@ -17,7 +17,7 @@ import { Separator } from "./ui/separator";
 import { useShoppingCart } from "@/context/ContextProvider";
 
 // Single item of the shopping cart.
-const ShoppingCartItem = ({
+export function ShoppingCartItem({
   item,
   updateAmount,
   removeItem,
@@ -30,7 +30,7 @@ const ShoppingCartItem = ({
     ShoppingCartContextType,
     "confirmAmountUpdate"
   >["confirmAmountUpdate"];
-}) => {
+}) {
   return (
     <div className="flex p-2 border border-border rounded shadow shadow-secondary">
       <div className="aspect-[3/4] h-full relative">
@@ -87,7 +87,7 @@ const ShoppingCartItem = ({
       </div>
     </div>
   );
-};
+}
 
 // Shopping cart.
 export default function ShoppingCart() {
