@@ -5,19 +5,24 @@ import OrderCard from "./OrderCard";
 import { Button } from "@/components/ui/button";
 
 // Component that represents the list of orders from a given user.
-export default function OrderPage() {
+function OrderPage() {
   // Use state for handling the orders data, the amount of displayed orders and the "Show More" button.
   const [orders, setOrders] = useState<OrderData[]>([]);
   // Pseudo page, since we are using only one single page and appending the results.
   const [page, setPage] = useState<number>(0);
   const [hasMore, setHasMore] = useState<boolean>(true);
   const [loading, setLoading] = useState<boolean>(true);
+  const [errorMsg, setError] = useState("");
   useEffect(() => {
     const fetchData = async () => {
       try {
+        setLoading(true);
+        setError("");
         const response = await fetch(`/api/orders?page=${page}`);
         if (!response.ok) {
-          throw new Error("Network response was not ok");
+          const errorMsg = await response.text();
+          setLoading(false);
+          setError(errorMsg);
         }
         const result: any[] = await response.json();
         if (result && result.length > 0) {
@@ -46,6 +51,8 @@ export default function OrderPage() {
     <main className="flex justify-center items-center px-6 py-10 xl:px-60">
       {loading ? (
         <span className="text-5xl">Loading...</span>
+      ) : errorMsg ? (
+        <div className="text-red-500 text-5xl">{errorMsg}</div>
       ) : (
         <div>
           {orders.length > 0 ? (
@@ -71,3 +78,4 @@ export default function OrderPage() {
     </main>
   );
 }
+export default OrderPage;

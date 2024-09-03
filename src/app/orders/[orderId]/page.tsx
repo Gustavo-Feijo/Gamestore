@@ -4,7 +4,15 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import QRCode from "qrcode";
 import OrderProductEntry from "./OrderProductEntry";
+import { auth } from "@/auth";
 async function Order({ params }: { params: { orderId: string } }) {
+  const session = await auth();
+  if (!session)
+    return (
+      <div className="w-full flex justify-center text-red-500 text-5xl">
+        You are not authorized, signIn.
+      </div>
+    );
   // Get the data for a specific order.
   const order = await prisma.sales.findFirst({
     where: { id: params.orderId },
