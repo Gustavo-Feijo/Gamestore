@@ -16,7 +16,7 @@ function GameCard({ gameInfo }: { gameInfo: GameInfo }) {
     <div className="w-full h-fit flex flex-col items-center bg-background p-2 shadow-sm shadow-foreground md:max-w-[1000px]">
       <h1 className="text-4xl text-center">{gameInfo.name}</h1>
       <Separator className="my-2" />
-      <div className="flex flex-col items-center justify-around w-full md:flex-row">
+      <div className="flex flex-col items-center justify-around w-full py-10 md:flex-row">
         <Image
           alt={gameInfo.name}
           src={gameInfo.image}
