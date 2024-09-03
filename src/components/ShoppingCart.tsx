@@ -1,5 +1,5 @@
 "use client";
-import { Button, buttonVariants } from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import { FaCheck, FaMoneyBill, FaShoppingCart, FaTrash } from "react-icons/fa";
 import { ShoppingCartContextType, ShoppingItem } from "@/types";
 import {
@@ -152,12 +152,11 @@ export default function ShoppingCart() {
                   0
                 )}
               </span>
-              <Link
-                href="/finish"
-                className={buttonVariants({ variant: "default" })}
-              >
-                Finish Order
-              </Link>
+              <Button asChild variant={"default"} className="bg-green-300">
+                <Link href="/finish" className="!text-black">
+                  Finish Order
+                </Link>
+              </Button>
             </div>
           </>
         )}

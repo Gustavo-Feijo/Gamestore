@@ -16,12 +16,13 @@ function GameCard({ gameInfo }: { gameInfo: GameInfo }) {
     <div className="w-full h-fit flex flex-col items-center bg-background p-2 shadow-sm shadow-foreground md:max-w-[1000px]">
       <h1 className="text-4xl text-center">{gameInfo.name}</h1>
       <Separator className="my-2" />
-      <div className="flex flex-col items-center justify-around md:flex-row">
+      <div className="flex flex-col items-center justify-around w-full md:flex-row">
         <Image
           alt={gameInfo.name}
           src={gameInfo.image}
           width={300}
           height={400}
+          className="aspect-[3/4]"
         />
         <div className="p-6 flex flex-col w-full gap-2 md:w-1/3">
           <p className="bg-secondary p-4 rounded">{gameInfo.description}</p>

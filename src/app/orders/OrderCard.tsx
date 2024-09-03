@@ -16,6 +16,7 @@ function OrderCard({ orderData }: { orderData: OrderData }) {
           width={120}
           height={160}
           alt={orderData.products[0].game.image}
+          className="aspect-[3/4]"
         />
         <div className="flex flex-col h-full items-center justify-between p-2 min-w-52">
           {orderData.paid ? (

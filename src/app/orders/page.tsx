@@ -64,7 +64,7 @@ export default function OrderPage() {
               )}
             </div>
           ) : (
-            <div>No orders found.</div>
+            <div className="text-5xl">No orders found.</div>
           )}
         </div>
       )}
