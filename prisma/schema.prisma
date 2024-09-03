@@ -93,7 +93,7 @@ model Review {
   id       String   @id @default(cuid())
   title    String
   review   String
-  score    Float
+  score    Int
   Game     Game     @relation(fields: [gameId], references: [id])
   gameId   String
   User     User     @relation(fields: [userId], references: [id])
