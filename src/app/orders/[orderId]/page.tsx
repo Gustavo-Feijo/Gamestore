@@ -23,7 +23,7 @@ async function Order({ params }: { params: { orderId: string } }) {
   let qrCodeUrl;
   if (!order.paid) {
     qrCodeUrl = await QRCode.toDataURL(
-      `http://localhost:3000/api/payment/${params.orderId}`
+      `${process.env.NEXT_PUBLIC_APPLICATION_URL}/api/payment/${params.orderId}`
     );
   }
 
@@ -72,7 +72,7 @@ async function Order({ params }: { params: { orderId: string } }) {
         )}
       </section>
       {qrCodeUrl && <Separator className="w-1/3" />}
-      <section className="flex flex-col gap-2 bg-secondary border p-4">
+      <section className="flex flex-col gap-2 border p-4 max-h-[600px] overflow-scroll">
         {order.products.map((product, index) => (
           <OrderProductEntry product={product} key={index} />
         ))}
