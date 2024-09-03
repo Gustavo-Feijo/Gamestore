@@ -80,14 +80,12 @@ model Game {
 model Categories {
   id    String @id @default(cuid())
   name  String
-  image String
   Games Game[]
 }
 
 model Developer {
   id    String @id @default(cuid())
   name  String
-  image String
   Games Game[]
 }
 
