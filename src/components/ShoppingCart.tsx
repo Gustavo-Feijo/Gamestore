@@ -126,7 +126,7 @@ export default function ShoppingCart() {
             Your current selected items...
           </SheetDescription>
         </SheetHeader>
-        <div className="flex flex-col gap-4 overflow-scroll">
+        <div className="flex flex-col flex-1 gap-4 overflow-scroll">
           {shoppingCart.length === 0 ? (
             <span className="text-3xl">Start buying...</span>
           ) : (
