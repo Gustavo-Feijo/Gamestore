@@ -127,8 +127,8 @@ function GameSearch() {
   };
   return (
     <section className="w-full flex flex-col border p-4 rounded md:w-3/4">
-      <div className="h-14 flex items-center justify-around">
-        <search className="relative h-fit">
+      <div className="h-14 flex items-center justify-around gap-4">
+        <search className="relative h-fit w-[180px]">
           <Input
             ref={searchRef}
             onChange={(e) => {

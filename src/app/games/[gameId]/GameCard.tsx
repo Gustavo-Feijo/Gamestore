@@ -13,7 +13,7 @@ function GameCard({ gameInfo }: { gameInfo: GameInfo }) {
   // State button for adding a game to the shopping cart.
   const { addItem } = useShoppingCart();
   return (
-    <div className="w-full h-fit flex flex-col items-center bg-background p-2 shadow-sm shadow-foreground md:max-w-[1000px]">
+    <div className="w-full h-fit flex flex-col items-center bg-background p-2 border rounded md:max-w-[1000px]">
       <h1 className="text-4xl text-center">{gameInfo.name}</h1>
       <Separator className="my-2" />
       <div className="flex flex-col items-center justify-around w-full py-10 md:flex-row">
