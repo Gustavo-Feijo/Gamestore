@@ -1,18 +1,18 @@
 "use client";
-import { FaSearch } from "react-icons/fa";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
 import { debounce } from "lodash";
 import { SearchResultType } from "@/types";
 import Link from "next/link";
 import Image from "next/image";
 
-// SearchBar, yet to implement functionalities.
+// SearchBar component.
 function SearchBar() {
+  // useState with the current search and the results.
   const [search, setSearch] = useState("");
   const [searchResult, setSearchResult] = useState<SearchResultType>([]);
   useEffect(() => {
+    // Use effect for fetching the data from the endpoint.
     const fetchData = async () => {
       if (search.trim() === "") {
         setSearchResult([]);
@@ -27,10 +27,11 @@ function SearchBar() {
         const result: SearchResultType = await response.json();
         setSearchResult(result);
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
     };
 
+    // Debounce the fetch call.
     const debouncedFetchData = debounce(fetchData, 300);
     debouncedFetchData();
 
@@ -39,6 +40,7 @@ function SearchBar() {
     };
   }, [search]);
 
+  // Reset the state.
   const handleLinkClick = () => {
     setSearch("");
     setSearchResult([]);
