@@ -14,11 +14,11 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { useEffect, useRef, useState } from "react";
-import { Input } from "./ui/input";
+import { Input } from "@/components/ui/input";
 import { FaArrowLeft, FaArrowRight, FaSearch } from "react-icons/fa";
-import { Button } from "./ui/button";
+import { Button } from "@/components/ui/button";
 import Image from "next/image";
-import { Separator } from "./ui/separator";
+import { Separator } from "@/components/ui/separator";
 import { useShoppingCart } from "@/context/ContextProvider";
 import Link from "next/link";
 
