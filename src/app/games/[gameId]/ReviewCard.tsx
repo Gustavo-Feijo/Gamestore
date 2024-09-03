@@ -27,6 +27,7 @@ export async function ReviewCard({ gameId }: { gameId: string }) {
 
   // Get the count of the reviews by each score.
   const reviewInfo = await prisma.review.groupBy({
+    where: { gameId: gameId },
     by: "score",
     orderBy: { score: "desc" },
     _count: { _all: true },
@@ -46,7 +47,7 @@ export async function ReviewCard({ gameId }: { gameId: string }) {
   );
 
   return (
-    <section className="w-full h-fit flex flex-col items-center bg-background p-2 shadow-sm shadow-foreground md:max-w-[1000px]">
+    <section className="w-full h-fit flex flex-col items-center bg-background p-2 border rounded md:max-w-[1000px]">
       <h1 className="text-4xl">Reviews</h1>
       <Separator className="my-2" />
       <div className="flex flex-col">
