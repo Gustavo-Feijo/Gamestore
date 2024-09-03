@@ -66,8 +66,9 @@ function SearchBar() {
               <Image
                 alt={result.name}
                 src={result.image}
-                width={80}
-                height={110}
+                width={60}
+                height={80}
+                className="aspect-[3/4]"
               />
               <div className="flex flex-1 flex-col items-center w-80">
                 <span className="text-4xl text-center">{result.name}</span>

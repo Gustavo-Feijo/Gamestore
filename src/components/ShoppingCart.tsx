@@ -33,15 +33,13 @@ export function ShoppingCartItem({
 }) {
   return (
     <div className="flex p-2 border border-border rounded shadow shadow-secondary">
-      <div className="aspect-[3/4] h-full relative">
-        <Image
-          src={item.image}
-          alt={item.name}
-          width={96}
-          height={128}
-          className="object-cover h-full max-h-32 w-full"
-        />
-      </div>
+      <Image
+        src={item.image}
+        alt={item.name}
+        width={96}
+        height={128}
+        className="aspect-[3/4]"
+      />
       <div className="flex flex-col items-center w-52 max-w-52 px-2">
         <h1 className="text-wrap text-lg text-center font-semibold max-h-14 min-h-14 overflow-scroll">
           {item.name}
