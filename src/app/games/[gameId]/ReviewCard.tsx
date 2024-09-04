@@ -54,7 +54,7 @@ export async function ReviewCard({ gameId }: { gameId: string }) {
         <div className="flex flex-col gap-2 items-center">
           {userReview ? (
             <Link
-              href={`/reviews/edit/${gameId}`}
+              href={`/reviews/${gameId}/me`}
               className={buttonVariants({
                 variant: "default",
                 className: "w-40",
@@ -66,7 +66,7 @@ export async function ReviewCard({ gameId }: { gameId: string }) {
             <>
               <span>You didnt wrote a review for this game...</span>
               <Link
-                href={`/reviews/new/${gameId}`}
+                href={`/reviews/${gameId}/me`}
                 className={buttonVariants({
                   variant: "default",
                   className: "w-40",

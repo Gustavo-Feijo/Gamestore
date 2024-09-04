@@ -139,7 +139,7 @@ function ReviewForm({
           name="review"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Title</FormLabel>
+              <FormLabel>Review</FormLabel>
               <FormControl>
                 <Textarea
                   placeholder="Review... (Optional)"
