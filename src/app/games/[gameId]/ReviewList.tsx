@@ -64,14 +64,6 @@ export default function ReviewList({ gameId }: { gameId: string }) {
                 {review.review}
               </p>
             </CardContent>
-            <CardFooter className="flex items-center justify-center">
-              <Link
-                className={buttonVariants({ variant: "default" })}
-                href={`/reviews/${review.id}`}
-              >
-                See full review.
-              </Link>
-            </CardFooter>
           </Card>
         ))}
       </div>
