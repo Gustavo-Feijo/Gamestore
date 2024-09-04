@@ -61,3 +61,6 @@ export type SearchResultType = Prisma.GameGetPayload<{
 export type OrderProductEntryType = Prisma.SaleProductGetPayload<{
   include: { game: { select: { price: true; image: true; name: true } } };
 }>;
+
+// Type for the review result.
+export type ReviewDataType = Prisma.ReviewGetPayload<{}>;
