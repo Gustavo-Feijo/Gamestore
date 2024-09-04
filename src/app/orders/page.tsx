@@ -49,9 +49,7 @@ function OrderPage() {
 
   return (
     <main className="flex justify-center items-center px-6 py-10 xl:px-60">
-      {loading ? (
-        <span className="text-5xl">Loading...</span>
-      ) : errorMsg ? (
+      {errorMsg ? (
         <div className="text-red-500 text-5xl">{errorMsg}</div>
       ) : (
         <div>
@@ -60,14 +58,18 @@ function OrderPage() {
               {orders.map((order, index) => (
                 <OrderCard orderData={order} key={index} />
               ))}
-              {hasMore && (
-                <Button
-                  onClick={handleMore}
-                  variant={"outline"}
-                  className="h-50"
-                >
-                  Show More
-                </Button>
+              {loading ? (
+                <span className="text-5xl">Loading...</span>
+              ) : (
+                hasMore && (
+                  <Button
+                    onClick={handleMore}
+                    variant={"outline"}
+                    className="h-50"
+                  >
+                    Show More
+                  </Button>
+                )
               )}
             </div>
           ) : (
