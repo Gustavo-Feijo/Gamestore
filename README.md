@@ -38,11 +38,9 @@ The currently employed technologies are as follow:
 - [X] Create initial database setup.
 - [X] Create basic UI starting point.
 - [X] Implement fully functional TopBar with SideBar menu.
-- [ ] Create starting page.
-- [ ] Create functional Games page.
+- [X] Create starting page.
+- [X] Create functional Games page.
 - [X] Add functional Shopping Cart.
-- [ ] Seeding for the database.
+- [X] Seeding for the database.
 - [X] Create pseudo payment process.
-- [ ] Improve database structure.
-- [ ] Add responsivity.
-- [ ] Add Theme changer and improve the themes visual.
+- [X] Add responsivity.
