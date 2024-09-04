@@ -1,7 +1,7 @@
 import prisma from "@/server/db";
 import { NextRequest } from "next/server";
 
-// Endpoint for updating a specific item amount on the shopping cart.
+// Function for getting the list of reviews.
 export async function GET(
   req: NextRequest,
   { params }: { params: { gameId: string } }
@@ -18,7 +18,7 @@ export async function GET(
     const page = searchParams.get("page") || "0";
     // Verify if all params are present.
     if (gameId) {
-      // Update the amount of the item for the user cart.
+      // Get the list of reviews.
       const data = await prisma.review.findMany({
         where: { gameId: gameId },
         take: pageSize,
@@ -33,7 +33,7 @@ export async function GET(
       });
       return new Response(JSON.stringify(data));
     } else {
-      throw new Error("Missing one of the parameters for updating.");
+      throw new Error("Missing the gameId.");
     }
   } catch (error) {
     console.error("Error while returning reviews:", error);
