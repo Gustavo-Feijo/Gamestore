@@ -1,7 +1,7 @@
 import { auth } from "@/auth";
 import prisma from "@/server/db";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
-import { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 /**
  * Dynamic Route for handling specific item changes.
@@ -17,14 +17,20 @@ export async function DELETE(
   // Get the session for using protecting the endpoint and getting the userId.
   const session = await auth();
   if (!session) {
-    return new Response("You are not authorized, signIn.", { status: 401 });
+    return NextResponse.json(
+      { error: "Unauthorized", message: "You are not authorized, signIn." },
+      { status: 401 }
+    );
   }
   // Get the userId and the gameId from the params.
   const userId = session.user?.id;
   const gameId = params.gameId;
   try {
     if (!userId) {
-      throw new Error("Couldn't get the User Id.");
+      return NextResponse.json(
+        { error: "Unauthorized", message: "Could not get the user id." },
+        { status: 401 }
+      );
     }
     // Delete specified item for the authenticated user.
     await prisma.shoppingItems.delete({
@@ -34,13 +40,19 @@ export async function DELETE(
     });
 
     // Return that the items were deleted.
-    return new Response(
-      JSON.stringify({ message: "Item deleted successfully" }),
+    return NextResponse.json(
+      { result: "Item deleted successfully" },
       { status: 200 }
     );
   } catch (error) {
     console.error("Error deleting shopping item:", error);
-    return new Response("Internal Server Error", { status: 500 });
+    return NextResponse.json(
+      {
+        error: "Internal Server Error",
+        message: "A error occurred on the server. Try again",
+      },
+      { status: 500 }
+    );
   }
 }
 
@@ -52,7 +64,10 @@ export async function POST(
   // Get the session for using protecting the endpoint and getting the userId.
   const session = await auth();
   if (!session) {
-    return new Response("You are not authorized, signIn.", { status: 401 });
+    return NextResponse.json(
+      { error: "Unauthorized", message: "You are not authorized, signIn." },
+      { status: 401 }
+    );
   }
   // Get the userId and the gameId from the params.
   const userId = session.user?.id;
@@ -66,19 +81,34 @@ export async function POST(
       });
     }
 
-    return new Response("Cart updated successfully", { status: 201 });
+    return NextResponse.json(
+      { result: "Cart updated successfully" },
+      { status: 201 }
+    );
   } catch (error) {
     console.error("Error while adding item to the cart:", error);
     if (error instanceof PrismaClientKnownRequestError) {
       if (error.code == "P2002") {
         // Return a error for duplicate entries being added.
         // Should not be triggered normally due to client state logic.
-        return new Response("Game already on the shopping cart.", {
-          status: 409,
-        });
+        return NextResponse.json(
+          {
+            error: "Conflict",
+            message: "Game already on the shopping cart.",
+          },
+          {
+            status: 409,
+          }
+        );
       }
     }
-    return new Response("Internal Server Error", { status: 500 });
+    return NextResponse.json(
+      {
+        error: "Internal Server Error",
+        message: "A error occurred on the server. Try again",
+      },
+      { status: 500 }
+    );
   }
 }
 
@@ -90,7 +120,10 @@ export async function PATCH(
   // Get the session for using protecting the endpoint and getting the userId.
   const session = await auth();
   if (!session) {
-    return new Response("You are not authorized, signIn.", { status: 401 });
+    return NextResponse.json(
+      { error: "Unauthorized", message: "You are not authorized, signIn." },
+      { status: 401 }
+    );
   }
 
   try {
@@ -108,21 +141,42 @@ export async function PATCH(
         data: { amount: amount },
       });
     } else {
-      throw new Error("Missing one of the parameters for updating.");
+      return NextResponse.json(
+        {
+          error: "Bad Request",
+          message: "Missing one of the parameters for updating.",
+        },
+        { status: 400 }
+      );
     }
 
-    return new Response("Cart updated successfully", { status: 201 });
+    return NextResponse.json(
+      { result: "Cart updated successfully" },
+      { status: 201 }
+    );
   } catch (error) {
     console.error("Error while adding item to the cart:", error);
     if (error instanceof PrismaClientKnownRequestError) {
       if (error.code == "P2002") {
         // Return a error for duplicate entries being added.
         // Should not be triggered normally due to client state logic.
-        return new Response("Game already on the shopping cart.", {
-          status: 409,
-        });
+        return NextResponse.json(
+          {
+            error: "Conflict",
+            message: "Game already on the shopping cart.",
+          },
+          {
+            status: 409,
+          }
+        );
       }
     }
-    return new Response("Internal Server Error", { status: 500 });
+    return NextResponse.json(
+      {
+        error: "Internal Server Error",
+        message: "A error occurred on the server. Try again",
+      },
+      { status: 500 }
+    );
   }
 }

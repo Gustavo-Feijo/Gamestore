@@ -1,7 +1,7 @@
 "use client";
-import { OrderData } from "@/types";
+import { OrderData, OrderList } from "@/types";
 import { useEffect, useState } from "react";
-import OrderCard from "./OrderCard";
+import OrderCard from "@/components/OrderPage/OrderCard";
 import { Button } from "@/components/ui/button";
 
 // Component that represents the list of orders from a given user.
@@ -20,17 +20,17 @@ function OrderPage() {
         setError("");
         const response = await fetch(`/api/orders?page=${page}`);
         if (!response.ok) {
-          const errorMsg = await response.text();
+          const errorData = await response.json();
           setLoading(false);
-          setError(errorMsg);
+          setError(errorData.message);
         }
-        const result: any[] = await response.json();
-        if (result && result.length > 0) {
+        const data: { result: OrderList } = await response.json();
+        if (data.result && data.result.length > 0) {
           // Convert each new result to a date.
-          result.forEach(
+          data.result.forEach(
             (result) => (result.createAt = new Date(result.createAt))
           );
-          setOrders((prev) => [...prev, ...result]);
+          setOrders((prev) => [...prev, ...data.result]);
         } else {
           setHasMore(false);
         }

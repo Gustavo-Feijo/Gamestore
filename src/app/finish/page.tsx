@@ -56,29 +56,33 @@ function FinishOrder() {
             <Button
               className="bg-green-300 text-black"
               onClick={async () => {
-                const response = await fetch("/api/finishOrder", {
+                const response = await fetch("/api/finish-order", {
                   method: "POST",
                 });
                 if (!response.ok) {
-                  const message = await response.text();
-                  toast.error(message);
+                  const errorData = await response.json();
+                  toast.error(errorData.message);
                 } else {
                   const data = await response.json();
+                  await syncCart();
                   setQrCode(
-                    `${process.env.NEXT_PUBLIC_APPLICATION_URL}/api/payment/${data.orderId}`
+                    `${process.env.NEXT_PUBLIC_APPLICATION_URL}/api/payment/${data.result}`
                   );
                 }
               }}
             >
               Finish Order
             </Button>
-            {qrCode && (
-              <QRCodeSVG value={qrCode} size={256} includeMargin={true} />
-            )}
           </div>
         </>
       ) : (
         <span className="text-5xl">Empty Shopping Cart</span>
+      )}
+      {qrCode && (
+        <div>
+          <span className="text-3xl">Current QR Code:</span>
+          <QRCodeSVG value={qrCode} size={256} includeMargin={true} />
+        </div>
       )}
     </main>
   );

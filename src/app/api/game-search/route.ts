@@ -1,5 +1,5 @@
 import prisma from "@/server/db";
-import { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 // Function to handle search requests.
 export async function GET(req: NextRequest) {
@@ -11,6 +11,19 @@ export async function GET(req: NextRequest) {
   const pageSize = Math.min(parseInt(searchParams.get("pageSize") || "20"), 20);
   const search = searchParams.get("search") || "";
 
+  if (isNaN(pageSize)) {
+    return NextResponse.json({
+      error: "Bad Request",
+      message: "The provided page size is not a number.",
+    });
+  }
+
+  if (isNaN(page)) {
+    return NextResponse.json({
+      error: "Bad Request",
+      message: "The provided page is not a number.",
+    });
+  }
   try {
     const count = await prisma.game.count();
     // Get the result.
@@ -27,11 +40,18 @@ export async function GET(req: NextRequest) {
       },
     });
     // Return the result and if there is any other result to be fetched.
-    return new Response(
-      JSON.stringify({ result, hasMore: count > pageSize * (page + 1) })
-    );
+    return NextResponse.json({
+      result,
+      hasMore: count > pageSize * (page + 1),
+    });
   } catch (error) {
     console.error("Error while getting the search:", error);
-    return new Response("Internal Server Error", { status: 500 });
+    return NextResponse.json(
+      {
+        error: "Internal Server Error",
+        message: "A error occurred on the server. Try again",
+      },
+      { status: 500 }
+    );
   }
 }

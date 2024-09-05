@@ -22,10 +22,11 @@ function SearchBar() {
       try {
         const response = await fetch(`/api/search?search=${search}`);
         if (!response.ok) {
-          throw new Error("Network response was not ok");
+          const errorData = await response.json();
+          throw new Error(errorData.message || "Network response was not ok");
         }
-        const result: SearchResultType = await response.json();
-        setSearchResult(result);
+        const data: { result: SearchResultType } = await response.json();
+        setSearchResult(data.result);
       } catch (error) {
         console.error(error);
       }

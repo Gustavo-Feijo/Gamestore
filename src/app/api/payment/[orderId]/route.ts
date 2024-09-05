@@ -1,18 +1,19 @@
 import { auth } from "@/auth";
 import prisma from "@/server/db";
-import { NextRequest } from "next/server";
+import { NextResponse } from "next/server";
 
 // Pseudo payment route.
 // Just for changing a order to paid.
-export async function GET(
-  req: NextRequest,
-  { params }: { params: { orderId: string } }
-) {
+export async function GET({ params }: { params: { orderId: string } }) {
   // Get the session.
   const session = await auth();
   if (!session) {
-    return new Response("You are not authorized, signIn.", { status: 401 });
+    return NextResponse.json(
+      { error: "Unauthorized", message: "You are not authorized, signIn." },
+      { status: 401 }
+    );
   }
+
   const userId = session.user?.id;
   try {
     // Get the order data.
@@ -21,11 +22,23 @@ export async function GET(
     });
     // Handle requests for a order not found.
     if (!order) {
-      return new Response("Order not found.", { status: 404 });
+      return NextResponse.json(
+        {
+          error: "Not Found",
+          message: "Order not found.",
+        },
+        { status: 404 }
+      );
     }
     // Handle requests for a order that was already paid.
     if (order.paid === true) {
-      return new Response("Order already paid.", { status: 409 });
+      return NextResponse.json(
+        {
+          error: "Conflict",
+          message: "Order already paid.",
+        },
+        { status: 409 }
+      );
     }
 
     // Update the order entry.
@@ -33,9 +46,18 @@ export async function GET(
       where: { userId: userId, id: params.orderId, paid: false },
       data: { paid: true },
     });
-    return new Response("Order payment confirmed.", { status: 200 });
+    return NextResponse.json(
+      { result: "Operation Successful." },
+      { status: 200 }
+    );
   } catch (error) {
     console.error("Error confirming order payment:", error);
-    return new Response("Internal Server Error", { status: 500 });
+    return NextResponse.json(
+      {
+        error: "Internal Server Error",
+        message: "A error occurred on the server. Try again",
+      },
+      { status: 500 }
+    );
   }
 }

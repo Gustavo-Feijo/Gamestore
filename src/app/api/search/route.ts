@@ -1,5 +1,5 @@
 import prisma from "@/server/db";
-import { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 // Function to handle search requests.
 export async function GET(req: NextRequest) {
@@ -22,9 +22,15 @@ export async function GET(req: NextRequest) {
         Developer: { select: { name: true } },
       },
     });
-    return new Response(JSON.stringify(result));
+    return NextResponse.json({ result }, { status: 200 });
   } catch (error) {
     console.error("Error while getting the search:", error);
-    return new Response("Internal Server Error", { status: 500 });
+    return NextResponse.json(
+      {
+        error: "Internal Server Error",
+        message: "A error occurred on the server. Try again",
+      },
+      { status: 500 }
+    );
   }
 }

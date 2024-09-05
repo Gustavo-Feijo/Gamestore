@@ -1,5 +1,5 @@
-import GamesCarousel from "./GamesCarousel";
-import GameSearch from "./GameSearch";
+import GamesCarousel from "@/components/MainPage/GamesCarousel";
+import GameSearch from "@/components/MainPage/GameSearch";
 import prisma from "@/server/db";
 
 export default async function Home() {

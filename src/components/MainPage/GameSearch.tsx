@@ -100,15 +100,16 @@ function GameSearch() {
           params.append("search", search);
         }
         setLoading(true);
-        const response = await fetch(`/api/gamesearch?${params.toString()}`);
+        const response = await fetch(`/api/game-search?${params.toString()}`);
         if (!response.ok) {
-          throw new Error("Network response was not ok");
+          const errorData = await response.json();
+          throw new Error(errorData.message || "Network response was not ok");
         }
-        const result: { result: GameSearch[]; hasMore: boolean } =
+        const data: { result: GameSearch[]; hasMore: boolean } =
           await response.json();
-        if (result) {
-          setGameList(result.result);
-          setHasMore(result.hasMore);
+        if (data) {
+          setGameList(data.result);
+          setHasMore(data.hasMore);
         }
         setLoading(false);
       } catch (error) {

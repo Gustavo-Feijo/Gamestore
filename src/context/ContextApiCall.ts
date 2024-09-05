@@ -11,10 +11,10 @@ export async function addToCart(gameId: string) {
   });
 
   // Get the response as text for getting a error cause.
-  const message = await response.text();
+  const data = await response.json();
   // Verify if the response was not sucesfull, if it wasn't, throw an error.
   if (!response.ok) {
-    throw new Error("Failed to add item to cart.", { cause: message });
+    throw new Error("Failed to add item to cart.", { cause: data.message });
   }
 }
 
@@ -29,11 +29,11 @@ export async function removeFromCart(gameId: string) {
   });
 
   // Get the response as text for getting a error cause.
-  const message = await response.text();
+  const data = await response.json();
   // Verify if the response was not sucesfull, if it wasn't, throw an error.
   if (!response.ok) {
     throw new Error("Failed to remove item from the cart.", {
-      cause: message,
+      cause: data.message,
     });
   }
 }
@@ -50,11 +50,11 @@ export async function updateOnCart(gameId: string, amount: number) {
   });
 
   // Get the response as text for getting a error cause.
-  const message = await response.text();
+  const data = await response.json();
   // Verify if the response was not sucesfull, if it wasn't, throw an error.
   if (!response.ok) {
     throw new Error("Failed to update item on the cart.", {
-      cause: message,
+      cause: data.message,
     });
   }
 }
@@ -64,10 +64,10 @@ export async function getCart(): Promise<CardSync> {
   const response = await fetch("/api/cart");
 
   if (!response.ok) {
-    const message = await response.text();
-    throw new Error("Could not fetch the cart.", { cause: message });
+    const data = await response.json();
+    throw new Error("Could not fetch the cart.", { cause: data.message });
   }
 
-  const data: CardSync = await response.json();
-  return data;
+  const data: { result: CardSync } = await response.json();
+  return data.result;
 }

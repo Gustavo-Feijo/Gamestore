@@ -1,6 +1,6 @@
 import { auth } from "@/auth";
 import prisma from "@/server/db";
-import { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { z, ZodError } from "zod";
 
 // Function for getting the list of reviews.
@@ -21,7 +21,7 @@ export async function GET(
     // Verify if all params are present.
     if (gameId) {
       // Get the list of reviews.
-      const data = await prisma.review.findMany({
+      const result = await prisma.review.findMany({
         where: { gameId: gameId },
         take: pageSize,
         skip: pageSize * parseInt(page),
@@ -33,13 +33,22 @@ export async function GET(
           id: true,
         },
       });
-      return new Response(JSON.stringify(data));
+      return NextResponse.json({ result });
     } else {
-      throw new Error("Missing the gameId.");
+      return NextResponse.json(
+        { error: "Not found", message: "Could not find the game id." },
+        { status: 404 }
+      );
     }
   } catch (error) {
     console.error("Error while returning reviews:", error);
-    return new Response("Internal Server Error", { status: 500 });
+    return NextResponse.json(
+      {
+        error: "Internal Server Error",
+        message: "A error occurred on the server. Try again",
+      },
+      { status: 500 }
+    );
   }
 }
 
@@ -60,12 +69,18 @@ export async function POST(
     // Get the session.
     const session = await auth();
     if (!session) {
-      return new Response("You are not authorized, signIn.", { status: 401 });
+      return NextResponse.json(
+        { error: "Unauthorized", message: "You are not authorized, signIn." },
+        { status: 401 }
+      );
     }
 
     // Verify if can access the user id.
     if (!session.user?.id) {
-      return new Response("Could not get your user id.", { status: 401 });
+      return NextResponse.json(
+        { error: "Unauthorized", message: "Could not get your user id." },
+        { status: 401 }
+      );
     }
 
     // Get the params on variables.
@@ -75,19 +90,33 @@ export async function POST(
     // Get the response body and parse with Zod.
     const data = await req.json();
     const { review, score, title } = await PostSchema.parseAsync(data);
+
     // Upsert the review data.
     await prisma.review.upsert({
       where: { gameId_userId: { gameId, userId } },
       create: { review, score, title, userId, gameId },
       update: { review, score, title },
     });
-    return new Response("Operation Successful.", { status: 200 });
+
+    return NextResponse.json(
+      { result: "Operation Successful." },
+      { status: 200 }
+    );
   } catch (error) {
     console.error("Error while returning reviews:", error);
     // Handle any zod error.
     if (error instanceof ZodError) {
-      return new Response("Wrong parameters.", { status: 400 });
+      return NextResponse.json(
+        { error: "Bad Request", message: "Wrong parameters." },
+        { status: 400 }
+      );
     }
-    return new Response("Internal Server Error", { status: 500 });
+    return NextResponse.json(
+      {
+        error: "Internal Server Error",
+        message: "A error occurred on the server. Try again",
+      },
+      { status: 500 }
+    );
   }
 }

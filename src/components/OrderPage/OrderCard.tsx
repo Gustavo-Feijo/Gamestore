@@ -1,8 +1,8 @@
-import { buttonVariants } from "@/components/ui/button";
-import { OrderData } from "@/types";
+import { FaGamepad, FaMoneyBill } from "react-icons/fa";
 import Image from "next/image";
 import Link from "next/link";
-import { FaGamepad, FaMoneyBill } from "react-icons/fa";
+import { OrderData } from "@/types";
+import { buttonVariants } from "@/components/ui/button";
 
 function OrderCard({ orderData }: { orderData: OrderData }) {
   return (

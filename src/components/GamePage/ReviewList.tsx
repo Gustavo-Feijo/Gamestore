@@ -1,15 +1,13 @@
 "use client";
-import { Button, buttonVariants } from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { ReviewData } from "@/types";
-import Link from "next/link";
+import { ReviewData, ReviewListType } from "@/types";
 import { useEffect, useState } from "react";
 
 export default function ReviewList({ gameId }: { gameId: string }) {
@@ -23,14 +21,15 @@ export default function ReviewList({ gameId }: { gameId: string }) {
       try {
         const response = await fetch(`/api/reviews/${gameId}?page=${page}`);
         if (!response.ok) {
-          throw new Error("Network response was not ok");
+          const errorData = await response.json();
+          throw new Error(errorData.message || "Network response was not ok");
         }
-        const result: any[] = await response.json();
-        if (result && result.length > 0) {
-          result.forEach(
+        const data: { result: ReviewListType } = await response.json();
+        if (data.result && data.result.length > 0) {
+          data.result.forEach(
             (review) => (review.createAt = new Date(review.createAt))
           );
-          setReviews((prev) => [...prev, ...result]);
+          setReviews((prev) => [...prev, ...data.result]);
         } else {
           setHasMore(false);
         }

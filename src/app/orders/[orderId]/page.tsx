@@ -3,7 +3,7 @@ import prisma from "@/server/db";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import QRCode from "qrcode";
-import OrderProductEntry from "./OrderProductEntry";
+import OrderProductEntry from "@/components/OrderPage/OrderProductEntry";
 import { auth } from "@/auth";
 async function Order({ params }: { params: { orderId: string } }) {
   const session = await auth();

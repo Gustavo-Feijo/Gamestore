@@ -1,8 +1,8 @@
 import prisma from "@/server/db";
 import { notFound } from "next/navigation";
 import React from "react";
-import GameCard from "./GameCard";
-import ReviewCard from "./ReviewCard";
+import GameCard from "@/components/GamePage/GameCard";
+import ReviewCard from "@/components/GamePage/ReviewCard";
 
 // Page for a specific game.
 async function GamePage({ params }: { params: { gameId: string } }) {
