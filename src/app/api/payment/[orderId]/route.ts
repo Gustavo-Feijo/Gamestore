@@ -1,6 +1,6 @@
 import { auth } from "@/auth";
 import prisma from "@/server/db";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 // Pseudo payment route.
 // Just for changing a order to paid.
