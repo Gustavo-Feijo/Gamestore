@@ -31,6 +31,29 @@ The currently employed technologies are as follow:
 
 ---
 
+## RUNNING
+
+For running the project some few steps are required.
+Node.js and PostgreSQL must be installed.
+
+1. Run `npm install`.
+2. Setup .env, required env's bellow..
+3. Run `npx prisma migrate deploy`
+4. Run `npm run seed`.
+5. Run `npm run deploy`
+6. Optional: Run `npm run seedReview` after at least a user login.
+   
+.env example:
+DATABASE_URL=""
+AUTH_SECRET=""
+AUTH_GITHUB_ID=""
+AUTH_GITHUB_SECRET=""
+NEXT_PUBLIC_APPLICATION_URL=""
+NEXTAUTH_URL= 
+AUTH_TRUST_HOST=
+
+---
+
 ## TODO
 
 - [X] Initiate the project.

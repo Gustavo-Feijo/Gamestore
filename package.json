@@ -6,6 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "deploy": "next build && next start",
+    "seed": "tsx src/server/seeding.ts",
+    "seedReview": "tsx src/server/reviewsSeeding.ts",
     "lint": "next lint"
   },
   "dependencies": {
