@@ -4,7 +4,10 @@ import { NextResponse } from "next/server";
 
 // Pseudo payment route.
 // Just for changing a order to paid.
-export async function GET({ params }: { params: { orderId: string } }) {
+export async function GET(
+  req: NextRequest,
+  { params }: { params: { orderId: string } }
+) {
   // Get the session.
   const session = await auth();
   if (!session) {
