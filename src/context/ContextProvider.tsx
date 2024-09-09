@@ -61,6 +61,7 @@ export function ShoppingCartStateProvider({
         if (error instanceof Error) {
           toast.error("It wasn't possible to add the game to your cart", {
             description: (error.cause as string) || "No cause specified",
+            action: { label: "Okay", onClick: () => {} },
           });
         }
       }
@@ -85,6 +86,7 @@ export function ShoppingCartStateProvider({
       if (error instanceof Error) {
         toast.error("It wasn't possible to remove the game from your cart", {
           description: (error.cause as string) || "No cause specified",
+          action: { label: "Okay", onClick: () => {} },
         });
       }
     }
@@ -118,6 +120,7 @@ export function ShoppingCartStateProvider({
             "It wasn't possible to update the game amount on your cart",
             {
               description: (error.cause as string) || "No cause specified",
+              action: { label: "Okay", onClick: () => {} },
             }
           );
         }
@@ -145,6 +148,7 @@ export function ShoppingCartStateProvider({
       if (error instanceof Error) {
         toast.error("Couldn't sync the cart with the database.", {
           description: (error.cause as string) || "No cause specified",
+          action: { label: "Okay", onClick: () => {} },
         });
       }
     }
