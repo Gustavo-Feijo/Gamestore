@@ -25,7 +25,9 @@ export async function GET(req: NextRequest) {
     });
   }
   try {
-    const count = await prisma.game.count();
+    const count = await prisma.game.count({
+      where: { name: { startsWith: search, mode: "insensitive" } },
+    });
     // Get the result.
     const result = await prisma.game.findMany({
       orderBy: { name: "asc" },
