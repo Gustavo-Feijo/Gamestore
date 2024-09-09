@@ -28,6 +28,7 @@ The currently employed technologies are as follow:
 -TailwindCss
 -ShadcnUI
 -Auth.js
+-Prisma (PostgreSQL)
 
 ---
 
